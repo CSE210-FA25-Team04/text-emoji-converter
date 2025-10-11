@@ -1,0 +1,60 @@
+name: PR Validation
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+  merge_group:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  check_code_style:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install Dependencies
+        run: npm ci
+      - name: Check Code Style
+        run: npm run lint
+      - name: Notify Slack
+        if: always()
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          channel-id: C09KG42761F
+          slack-message: |
+            :${{ job.status == 'success' && 'white_check_mark' || 'x' }}: Job *check_code_style* ${{ job.status }}
+            Repository: ${{ github.repository }}
+            Commit: ${{ github.sha }}
+            URL: ${{ github.server_url }}/{{ github.repository }}/actions/runs/${{ github.run_id }}
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
+  check_pr_title:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install Dependencies
+        run: npm ci
+      - name: Check PR Title
+        run: echo "${{ github.event.pull_request.title }}" | npx commitlint
+      - name: Notify Slack
+        if: always()
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          channel-id: C09KG42761F
+          slack-message: |
+            :${{ job.status == 'success' && 'white_check_mark' || 'x' }}: Job *check_pr_title* ${{ job.status }}
+            Repository: ${{ github.repository }}
+            Commit: ${{ github.sha }}
+            URL: ${{ github.server_url }}/{{ github.repository }}/actions/runs/${{ github.run_id }}
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
