@@ -43,7 +43,7 @@ jobs:
         with:
           node-version: 20
       - name: Install Dependencies
-        run: npm ci
+        run: npm install
       - name: Check PR Title
         run: echo "${{ github.event.pull_request.title }}" | npx commitlint
       - name: Notify Slack
