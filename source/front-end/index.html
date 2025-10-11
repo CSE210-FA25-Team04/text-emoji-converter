@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Family Language Detective</title>
+    <meta
+      name="description"
+      content="Translate between generational communication styles — Millennial, Gen Z, Boomer."
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="site-header" role="banner">
+      <h1 class="brand">🕵️‍♀️ Family Language Detective</h1>
+      <p class="lead">
+        Helping families decode generational communication and bridge
+        conversation gaps.
+      </p>
+    </header>
+
+    <nav class="generation-nav" aria-label="Generation selection">
+      <p class="visually-hidden" id="gen-heading">
+        Select generation to translate from and to
+      </p>
+      <ul class="cards" role="list" aria-labelledby="gen-heading">
+        <li
+          class="card"
+          data-gen="millennial"
+          aria-label="Millennial character card"
+        >
+          <figure class="card-face">
+            <button class="emoji" aria-hidden="true">💼</button>
+            <figcaption>
+              <strong>Millennial</strong>
+              <small class="tagline">Yasss, literally, TBH</small>
+            </figcaption>
+          </figure>
+          <menu class="card-actions" aria-label="Millennial actions">
+            <button class="set-from" type="button">From</button>
+            <button class="set-to" type="button">To</button>
+          </menu>
+        </li>
+
+        <li class="card" data-gen="genz" aria-label="Gen Z character card">
+          <figure class="card-face">
+            <button class="emoji" aria-hidden="true">✨</button>
+            <figcaption>
+              <strong>Gen Z</strong>
+              <small class="tagline">No cap, bussin', fr</small>
+            </figcaption>
+          </figure>
+          <menu class="card-actions" aria-label="Gen Z actions">
+            <button class="set-from" type="button">From</button>
+            <button class="set-to" type="button">To</button>
+          </menu>
+        </li>
+
+        <li class="card" data-gen="boomer" aria-label="Boomer character card">
+          <figure class="card-face">
+            <button class="emoji" aria-hidden="true">☕</button>
+            <figcaption>
+              <strong>Boomer</strong>
+              <small class="tagline">Proper grammar...</small>
+            </figcaption>
+          </figure>
+          <menu class="card-actions" aria-label="Boomer actions">
+            <button class="set-from" type="button">From</button>
+            <button class="set-to" type="button">To</button>
+          </menu>
+        </li>
+      </ul>
+
+      <p class="selected-info" aria-live="polite">
+        <span><strong>From:</strong> <span id="selected-from">—</span></span>
+        <span class="separator" aria-hidden="true"> • </span>
+        <span><strong>To:</strong> <span id="selected-to">—</span></span>
+      </p>
+    </nav>
+
+    <main id="main" class="workspace" role="main">
+      <section class="panel panel-left" aria-labelledby="input-title">
+        <header class="panel-header">
+          <h2 id="input-title">
+            Your Message <span class="badge" id="from-badge">—</span>
+          </h2>
+        </header>
+
+        <form id="translator-form" class="translator-form" novalidate>
+          <label for="text-input" class="visually-hidden"
+            >Enter text to translate</label
+          >
+          <textarea
+            id="text-input"
+            name="text"
+            rows="6"
+            placeholder="Type your message here..."
+            aria-describedby="hint"
+          ></textarea>
+
+          <div class="output-controls">
+            <button id="emoji-btn" type="button" title="Select Emojis">
+              Emojis
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <aside class="center-controls" aria-hidden="false" role="complementary">
+        <button
+          id="swap-btn"
+          class="icon-circle"
+          title="Swap From/To"
+          aria-label="Swap generations"
+        >
+          🔁
+        </button>
+        <button
+          id="direct-translate"
+          class="icon-circle"
+          title="Quick Translate"
+          aria-label="Quick translate"
+        >
+          ▶️
+        </button>
+      </aside>
+
+      <aside class="panel panel-right" aria-labelledby="output-title">
+        <header class="panel-header">
+          <h2 id="output-title">
+            Translated <span id="to-badge" class="badge">—</span>
+          </h2>
+        </header>
+
+        <div
+          class="output"
+          id="emoji-output"
+          tabindex="0"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          <p class="placeholder">
+            No translation yet. Please decode a message.
+          </p>
+        </div>
+
+        <div class="output-controls">
+          <button id="copy-btn" type="button" title="Copy translated text">
+            📋 Copy
+          </button>
+          <button id="clear-btn" type="button" title="Clear output">
+            🧹 Clear
+          </button>
+        </div>
+      </aside>
+    </main>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
