@@ -5,8 +5,12 @@
   "dependencies": {
     "@primer/css": "17.0.1"
   },
-  "license": "MIT",
   "devDependencies": {
-    "eslint": "^9.37.0"
-  }
+    "eslint": "^9.37.0",
+    "prettier": "^2.8.7"
+  },
+  "scripts": {
+    "lint": "prettier --check . && eslint ."
+  },
+  "license": "MIT"
 }
