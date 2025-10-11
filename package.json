@@ -1,9 +1,12 @@
 {
-  "name": "text-emoji-convert",
-  "version": "0.2.0",
-  "description": "A package.json",
+  "name": "text-emoji-converter",
+  "version": "0.1.0",
+  "description": "A text ↔ emoji translator",
+  "license": "MIT",
   "dependencies": {
     "@primer/css": "17.0.1"
   },
-  "license": "MIT"
+  "scripts": {
+    "lint": "eslint ."
+  }
 }
