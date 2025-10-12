@@ -47,7 +47,7 @@ jobs:
       - name: Check PR Title
         run: |
           echo "${{ github.event.pull_request.title }}" > pr_title.txt
-          npx commitlint --edit pr_title.txt
+          npx commitlint --edit pr_title.txt --strict
           rm pr_title.txt
       - name: Notify Slack
         if: always()
