@@ -13,7 +13,10 @@
     "prettier": "^2.8.8"
   },
   "scripts": {
-    "lint": "prettier --check . && eslint ."
+    "lint:prettier": "prettier --check .",
+    "lint:js": "eslint .",
+    "lint:css": "stylelint '**/*.{css,scss}'",
+    "lint": "npm run lint:prettier && npm run lint:js && npm run lint:css"
   },
   "license": "MIT"
 }
