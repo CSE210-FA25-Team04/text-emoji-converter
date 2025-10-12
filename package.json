@@ -2,6 +2,7 @@
   "name": "text-emoji-convert",
   "version": "0.2.0",
   "description": "A package.json",
+  "type": "module",
   "dependencies": {
     "@primer/css": "17.0.1"
   },
