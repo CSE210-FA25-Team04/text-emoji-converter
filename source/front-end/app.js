@@ -60,7 +60,7 @@ emojiBtn.addEventListener("click", () => {
   const emojiWindow = window.open(
     "",
     "emojiPicker",
-    "width=400,height=500,resizable=yes,scrollbars=yes",
+    "width=400,height=500,resizable=yes,scrollbars=yes"
   );
 
   emojiWindow.document.write(`
@@ -78,25 +78,25 @@ emojiBtn.addEventListener("click", () => {
     <body>
       <script>
         const emojis = [ '😀', '😁', '😂', '🤣', '😃', '😄', '😅', '😆', '😉', '😊',
-  '😋', '😎', '😍', '😘', '🥰', '😗', '😙', '😚', '🙂', '🤗',
-  '🤩', '🤔', '🤨', '😐', '😑', '😶', '🙄', '😏', '😣', '😥',
-  '😮', '🤐', '😯', '😪', '😫', '😴', '😌', '😛', '😜', '😝',
-  '🤤', '😒', '😓', '😔', '😕', '🙃', '🤑', '😲', '☹️', '🙁',
-  '😖', '😞', '😟', '😤', '😢', '😭', '😦', '😧', '😨', '😩',
-  '🤯', '😬', '😰', '😱', '🥵', '🥶', '😳', '🤪', '😵', '😡',
-  '😠', '🤬', '😷', '🤒', '🤕', '🤢', '🤮', '🤧', '😇', '🤠',
-  '🤡', '🥳', '🥴', '🥺', '🤥', '🤫', '🤭', '🧐', '🤓', '😈',
-  '👋', '🤚', '🖐️', '✋', '🖖', '👌', '🤏', '✌️', '🤞', '🤟',
-  '🤘', '🤙', '👈', '👉', '👆', '🖕', '👇', '☝️', '👍', '👎',
-  '✊', '👊', '🤛', '🤜', '👏', '🙌', '👐', '🤲', '🤝', '🙏',
-  '💪', '🦾', '🦿', '🦵', '🦶', '👂', '🦻', '👃', '🧠', '🦷',
-  '❤️', '🧡', '💛', '💚', '💙', '💜', '🖤', '🤍', '🤎', '💔',
-  '❣️', '💕', '💞', '💓', '💗', '💖', '💘', '💝', '💟', '☮️',
-  '✨', '💫', '⭐', '🌟', '💥', '💯', '🔥', '⚡', '☄️', '💨',
-  '🎉', '🎊', '🎈', '🎁', '🏆', '🥇', '🥈', '🥉', '⚽', '🏀',
-  '🍕', '🍔', '🍟', '🌭', '🍿', '🧂', '🥓', '🥚', '🍳', '🧇',
-  '🥞', '🧈', '🍞', '🥐', '🥨', '🥯', '🥖', '🧀', '🥗', '🥙',
-  '☕', '🍵', '🧃', '🥤', '🍶', '🍺', '🍻', '🥂', '🍷', '🥃',];
+                      '😋', '😎', '😍', '😘', '🥰', '😗', '😙', '😚', '🙂', '🤗',
+                      '🤩', '🤔', '🤨', '😐', '😑', '😶', '🙄', '😏', '😣', '😥',
+                      '😮', '🤐', '😯', '😪', '😫', '😴', '😌', '😛', '😜', '😝',
+                      '🤤', '😒', '😓', '😔', '😕', '🙃', '🤑', '😲', '☹️', '🙁',
+                      '😖', '😞', '😟', '😤', '😢', '😭', '😦', '😧', '😨', '😩',
+                      '🤯', '😬', '😰', '😱', '🥵', '🥶', '😳', '🤪', '😵', '😡',
+                      '😠', '🤬', '😷', '🤒', '🤕', '🤢', '🤮', '🤧', '😇', '🤠',
+                      '🤡', '🥳', '🥴', '🥺', '🤥', '🤫', '🤭', '🧐', '🤓', '😈',
+                      '👋', '🤚', '🖐️', '✋', '🖖', '👌', '🤏', '✌️', '🤞', '🤟',
+                      '🤘', '🤙', '👈', '👉', '👆', '🖕', '👇', '☝️', '👍', '👎',
+                      '✊', '👊', '🤛', '🤜', '👏', '🙌', '👐', '🤲', '🤝', '🙏',
+                      '💪', '🦾', '🦿', '🦵', '🦶', '👂', '🦻', '👃', '🧠', '🦷',
+                      '❤️', '🧡', '💛', '💚', '💙', '💜', '🖤', '🤍', '🤎', '💔',
+                      '❣️', '💕', '💞', '💓', '💗', '💖', '💘', '💝', '💟', '☮️',
+                      '✨', '💫', '⭐', '🌟', '💥', '💯', '🔥', '⚡', '☄️', '💨',
+                      '🎉', '🎊', '🎈', '🎁', '🏆', '🥇', '🥈', '🥉', '⚽', '🏀',
+                      '🍕', '🍔', '🍟', '🌭', '🍿', '🧂', '🥓', '🥚', '🍳', '🧇',
+                      '🥞', '🧈', '🍞', '🥐', '🥨', '🥯', '🥖', '🧀', '🥗', '🥙',
+                      '☕', '🍵', '🧃', '🥤', '🍶', '🍺', '🍻', '🥂', '🍷', '🥃',];
         const textarea = opener.document.getElementById('text-input');
         emojis.forEach(e => {
           const btn = document.createElement('div');
@@ -136,12 +136,12 @@ directTranslate.addEventListener("click", runTranslate);
 function runTranslate() {
   const raw = (textInput.value || "").trim();
   if (!raw) {
-    setOutput('<p class="placeholder">Enter a message to decode.</p>');
+    setOutput("<p class='placeholder'>Enter a message to decode.</p>");
     return;
   }
   if (!fromGen || !toGen) {
     setOutput(
-      '<p class="placeholder">Select both a "From" and "To" generation above.</p>',
+      "<p class='placeholder'>Select both a 'From' and 'To' generation above.</p>"
     );
     return;
   }
@@ -169,7 +169,7 @@ copyBtn.addEventListener("click", async () => {
 
 clearBtn.addEventListener("click", () => {
   setOutput(
-    '<p class="placeholder">No translation yet — decode a message.</p>',
+    "<p class='placeholder'>No translation yet — decode a message.</p>"
   );
 });
 
@@ -199,68 +199,6 @@ function setOutput(htmlOrText) {
   }
 }
 
-// --- Mock translation (demo) ---
-function translateBetween(text, from, to) {
-  const baseMap = {
-    happy: "😊",
-    love: "❤️",
-    fire: "🔥",
-    party: "🎉",
-    sus: "🤨",
-    lol: "😂",
-    ok: "👌",
-    thanks: "🙏",
-    parents: "👨‍👩‍👧‍👦",
-    kids: "🧒",
-    hello: "Hello",
-    yes: "Yes",
-    no: "No",
-  };
-
-  const punctuation = /[.,!?;:]+$/;
-  const tokens = text.split(/\s+/).map((token) => {
-    const p = token.match(punctuation);
-    const tail = p ? p[0] : "";
-    const core = p ? token.slice(0, -tail.length) : token;
-    return { raw: token, core, tail };
-  });
-
-  function mapWord(w) {
-    const lw = w.toLowerCase();
-
-    if (to === "genz") {
-      if (baseMap[lw]) return baseMap[lw];
-      if (lw === "hello" || lw === "hi") return "hey";
-    }
-
-    if (to === "boomer") {
-      if (lw === "u") return "you";
-      if (lw === "ur") return "your";
-      if (lw === "idk") return "I don’t know";
-      if (baseMap[lw] && /\p{Emoji}/u.test(baseMap[lw])) {
-        if (baseMap[lw] === "🔥") return "exciting";
-        if (baseMap[lw] === "❤️") return "love";
-        if (baseMap[lw] === "😊") return "Happy";
-      }
-    }
-
-    if (baseMap[lw]) return baseMap[lw];
-    return w;
-  }
-
-  return tokens.map((t) => mapWord(t.core) + (t.tail || "")).join(" ");
-}
-
-function escapeHtml(str) {
-  return str.replace(
-    /[&<>"']/g,
-    (s) =>
-      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
-        s
-      ],
-  );
-}
-
 // --- Init ---
 updateSelectionVisuals();
-setOutput('<p class="placeholder">No translation yet — decode a message.</p>');
+setOutput("<p class='placeholder'>No translation yet — decode a message.</p>");
