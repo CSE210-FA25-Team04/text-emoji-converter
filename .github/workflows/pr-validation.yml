@@ -26,12 +26,12 @@ jobs:
         if: always()
         uses: slackapi/slack-github-action@v1.25.0
         with:
-          channel-id: C09KG42761F
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
           slack-message: |
             :${{ job.status == 'success' && 'white_check_mark' || 'x' }}: Job *check_code_style* ${{ job.status }}
             Repository: ${{ github.repository }}
             Commit: ${{ github.sha }}
-            URL: ${{ github.server_url }}/{{ github.repository }}/actions/runs/${{ github.run_id }}
+            URL: ${{ github.server_url }}/CSE210-FA25-Team04/text-emoji-converter/actions/runs/${{ github.run_id }}
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
@@ -45,16 +45,19 @@ jobs:
       - name: Install Dependencies
         run: npm install
       - name: Check PR Title
-        run: echo "${{ github.event.pull_request.title }}" > pr_title.txt npx commitlint --edit pr_title.txt
+        run: |
+          echo "${{ github.event.pull_request.title }}" > pr_title.txt
+          npx commitlint --edit pr_title.txt --strict
+          rm pr_title.txt
       - name: Notify Slack
         if: always()
         uses: slackapi/slack-github-action@v1.25.0
         with:
-          channel-id: C09KG42761F
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
           slack-message: |
             :${{ job.status == 'success' && 'white_check_mark' || 'x' }}: Job *check_pr_title* ${{ job.status }}
             Repository: ${{ github.repository }}
             Commit: ${{ github.sha }}
-            URL: ${{ github.server_url }}/{{ github.repository }}/actions/runs/${{ github.run_id }}
+            URL: ${{ github.server_url }}/CSE210-FA25-Team04/text-emoji-converter/actions/runs/${{ github.run_id }}
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
