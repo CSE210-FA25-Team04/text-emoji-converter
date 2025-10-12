@@ -45,7 +45,9 @@ jobs:
       - name: Install Dependencies
         run: npm install
       - name: Check PR Title
-        run: echo "${{ github.event.pull_request.title }}" > pr_title.txt npx commitlint --edit pr_title.txt
+        run: |
+          echo "${{ github.event.pull_request.title }}" > pr_title.txt
+          npx commitlint --edit pr_title.txt
       - name: Notify Slack
         if: always()
         uses: slackapi/slack-github-action@v1.25.0
