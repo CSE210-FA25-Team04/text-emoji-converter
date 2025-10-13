@@ -1,33 +1,75 @@
-# text-emoji-converter
-This repo is for the text to emoji conversion project. Please use this repo for the assigned project only and not for the main project
+📘 README.md
+# 🚀 Groq SDK (Node.js)
 
-# 🚀 Groq SDK Setup & Usage Guide
-
-This project demonstrates how to use the **Groq SDK** in both Node.js and Python environments.  
-It covers installation, configuration, and example usage for making API calls to Groq models.
+A minimal Node.js project demonstrating how to use the **Groq SDK** to interact with Groq language models.
 
 ---
 
-## 🧩 Prerequisites
+## 🧩 Requirements
 
-Make sure you have the following tools installed:
+| Tool | Purpose | Download |
+|------|----------|-----------|
+| **[Node.js (LTS)](https://nodejs.org/en/download)** | JavaScript runtime used to execute the app | |
+| **npm** (comes with Node.js) | Package manager for installing dependencies | |
+| **Groq SDK** | Library for accessing Groq models | `npm install groq-sdk` |
 
-| Tool | Purpose | Installation |
-|------|----------|---------------|
-| [Node.js (LTS)](https://nodejs.org/en/download) | JavaScript runtime (includes npm) | Windows Installer (.msi) |
-| [npm](https://www.npmjs.com/) | Node package manager (comes with Node.js) | Installed with Node.js |
-| [Python 3.x](https://www.python.org/downloads/) | Optional – use Groq SDK in Python | Windows Installer (.msi) |
-| [pip](https://pip.pypa.io/en/stable/) | Python package manager | Installed with Python |
-| [Docker Desktop](https://www.docker.com/products/docker-desktop/) | (Optional) Containerized runtime | Windows Installer (.exe) |
-| [WSL 2 (Ubuntu)](https://learn.microsoft.com/en-us/windows/wsl/install) | (Optional) Linux subsystem for Windows | Installed via PowerShell |
-| [Groq SDK](https://www.npmjs.com/package/groq-sdk) | Groq JavaScript SDK | Installed via npm |
-| [groq (Python)](https://pypi.org/project/groq/) | Groq Python SDK | Installed via pip |
-
----
-
-## ⚙️ Installation Steps
-
-### 1. Install Node.js and npm
-```bash
+Verify your installation:
+```powershell
 node -v
 npm -v
+
+⚙️ Installation
+
+Clone or download this repository.
+
+Install dependencies:
+
+npm install groq-sdk
+
+🔑 Set Your API Key
+Option 1 — Temporary (only for this session)
+$env:GROQ_API_KEY = "gsk_your_actual_key_here"
+
+Option 2 — Permanent (for all PowerShell sessions)
+setx GROQ_API_KEY "gsk_your_actual_key_here"
+
+
+Then reopen PowerShell and verify:
+
+echo $env:GROQ_API_KEY
+
+🧠 Example: index.js
+const Groq = require("groq-sdk");
+
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+
+async function main() {
+  const completion = await groq.chat.completions.create({
+    model: "llama-3.1-8b-instant",
+    messages: [
+      {
+        role: "system",
+        content: "You are a concise AI assistant.",
+      },
+      {
+        role: "user",
+        content: "Explain the importance of low latency LLMs.",
+      },
+    ],
+  });
+
+  console.log(completion.choices[0].message.content);
+}
+
+main();
+
+
+Run it:
+
+node .\index.js
+
+🧩 Troubleshooting
+Issue	Fix
+GroqError: The GROQ_API_KEY environment variable is missing	Set $env:GROQ_API_KEY or restart terminal
+npm : not recognized	Reinstall Node.js and ensure “Add to PATH” is checked
+BadRequestError: model_decommissioned	Use a current model like llama-3.1-8b-instant or llama-3.3-70b-versatile
