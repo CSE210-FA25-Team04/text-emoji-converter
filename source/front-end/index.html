@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header class="site-header" role="banner">
+    <header class="site-header">
       <h1 class="brand">🕵️‍♀️ Family Language Detective</h1>
       <p class="lead">
         Helping families decode generational communication and bridge
@@ -19,20 +19,20 @@
       </p>
     </header>
 
-    <nav class="generation-nav" aria-label="Generation selection">
+    <nav class="generation-nav" aria-labelledby="gen-heading">
       <p class="visually-hidden" id="gen-heading">
         Select generation to translate from and to
       </p>
-      <ul class="cards" role="list" aria-labelledby="gen-heading">
-        <li class="card" data-gen="genz" aria-label="Gen Z character card">
+      <ul class="cards">
+        <li class="card" data-gen="genz">
           <figure class="card-face">
-            <button class="emoji" aria-hidden="true">✨</button>
+            <button class="emoji" type="button" tabindex="-1" aria-hidden="true">✨</button>
             <figcaption>
               <strong>Gen Z</strong>
               <small class="tagline">No cap, bussin', fr</small>
             </figcaption>
           </figure>
-          <menu class="card-actions" aria-label="Gen Z actions">
+          <menu class="card-actions" aria-label="Gen Z actions" role="group">
             <button class="set-from" type="button">From</button>
             <button class="set-to" type="button">To</button>
           </menu>
@@ -60,7 +60,7 @@
       </p>
     </nav>
 
-    <main id="main" class="workspace" role="main">
+    <main id="main" class="workspace">
       <section class="panel panel-left" aria-labelledby="input-title">
         <header class="panel-header">
           <h2 id="input-title">
@@ -72,6 +72,7 @@
           <label for="text-input" class="visually-hidden"
             >Enter text to translate</label
           >
+          <p id="hint" class="visually-hidden">Type the message you want translated.</p>
           <textarea
             id="text-input"
             name="text"
@@ -88,7 +89,7 @@
         </form>
       </section>
 
-      <aside class="center-controls" aria-hidden="false" role="complementary">
+      <aside class="center-controls">
         <button
           id="swap-btn"
           class="icon-circle"
@@ -120,6 +121,7 @@
           tabindex="0"
           aria-live="polite"
           aria-atomic="true"
+          role="status"
         >
           <p class="placeholder">
             No translation yet. Please decode a message.
