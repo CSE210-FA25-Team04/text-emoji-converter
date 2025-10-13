@@ -53,5 +53,3 @@ r = requests.post(OLLAMA_API, json={
     "stream": False
 })
 print("Response:", r.json()["message"]["content"])
-
-print("test")
