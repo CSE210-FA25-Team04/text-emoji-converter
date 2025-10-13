@@ -18,7 +18,7 @@ Verify your installation:
 node -v
 npm -v
 
-⚙️ Installation
+## ⚙️ Installation
 
 Clone or download this repository.
 
@@ -26,7 +26,7 @@ Install dependencies:
 
 npm install groq-sdk
 
-🔑 Set Your API Key
+## 🔑 Set Your API Key
 Option 1 — Temporary (only for this session)
 $env:GROQ_API_KEY = "gsk_your_actual_key_here"
 
@@ -38,7 +38,7 @@ Then reopen PowerShell and verify:
 
 echo $env:GROQ_API_KEY
 
-🧠 Example: index.js
+## 🧠 Example: index.js
 const Groq = require("groq-sdk");
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
@@ -68,7 +68,7 @@ Run it:
 
 node .\index.js
 
-🧩 Troubleshooting
+## 🧩 Troubleshooting
 Issue	Fix
 GroqError: The GROQ_API_KEY environment variable is missing	Set $env:GROQ_API_KEY or restart terminal
 npm : not recognized	Reinstall Node.js and ensure “Add to PATH” is checked
