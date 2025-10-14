@@ -4,24 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generation Translator - Case File</title>
-    <meta name="description" content="Detective-themed generational language translator bridging Gen Z and Boomer communication styles">
+    <meta name="description" content="Detective-themed generational language translator bridging Millennial, Gen Z, and Boomer communication styles">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <main class="container">
         <header class="site-header">
             <div class="header-content">
-                <span class="detective-icon" aria-hidden="true">🕵️</span>
                 <h1>The Case of the Generation Gap</h1>
                 <span class="detective-icon" aria-hidden="true">🔍</span>
             </div>
-            <p class="tagline">Cracking the code between Gen Z and Boomer speak</p>
+            <p class="tagline">Helping families crack the code between Millennial, Gen Z, and Boomer communication styles</p>
         </header>
 
         <!-- Info Banner -->
         <aside class="info-banner">
             <span class="info-icon" aria-hidden="true">📋</span>
-            <p>This case file translates evidence between different generational communication styles, including slang, emoji usage, and cultural context. The investigation continues... 💼</p>
+            <p>This case file enables families to translate evidence between different generational communication styles which includes slang, emojis, and more!</p>
         </aside>
 
         <!-- Translator Section -->
@@ -30,6 +29,7 @@
                 <div class="generation-selector">
                     <label for="from-generation">Decode From:</label>
                     <select id="from-generation" name="from-generation">
+                        <option value="millennial">Millennial</option>
                         <option value="genz">Gen Z</option>
                         <option value="boomer">Boomer</option>
                     </select>
@@ -46,6 +46,7 @@
                 <div class="generation-selector">
                     <label for="to-generation">Translate To:</label>
                     <select id="to-generation" name="to-generation">
+                        <option value="millennial">Millennial</option>
                         <option value="genz" selected>Gen Z</option>
                         <option value="boomer">Boomer</option>
                     </select>
@@ -68,7 +69,6 @@
                             aria-label="Input text to translate"></textarea>
                         <div class="card-actions">
                             <button type="button" class="btn-secondary emoji-btn" data-target="input">
-                                <span aria-hidden="true">😀</span>
                                 <span>Add Emoji</span>
                             </button>
                             <button type="button" class="btn-secondary clear-btn" data-target="input">
@@ -81,6 +81,13 @@
                         <span class="char-count"><span id="input-count">0</span> characters</span>
                     </footer>
                 </article>
+
+                <!-- Translate Button -->
+                <div class="translate-button-container">
+                    <button type="button" class="translate-btn" id="translate-btn">
+                        <span class="btn-icon-arrow" aria-hidden="true">→</span>
+                    </button>
+                </div>
 
                 <!-- Output Card -->
                 <article class="card output-card">
@@ -114,11 +121,17 @@
             <details class="quick-examples">
                 <summary>Quick Case Files (Click to expand)</summary>
                 <div class="examples-grid">
+                    <button type="button" class="example-btn" data-text="I'm literally dying! This is so extra! 😂💀" data-from="millennial">
+                        "I'm literally dying! This is so extra! 😂💀"
+                    </button>
                     <button type="button" class="example-btn" data-text="no cap this slaps fr fr 💯🔥" data-from="genz">
                         "no cap this slaps fr fr 💯🔥"
                     </button>
                     <button type="button" class="example-btn" data-text="That's the bee's knees! Groovy! ☎️📻" data-from="boomer">
                         "That's the bee's knees! Groovy! ☎️📻"
+                    </button>
+                    <button type="button" class="example-btn" data-text="Can we circle back on this? Synergy! 💼" data-from="millennial">
+                        "Can we circle back on this? Synergy! 💼"
                     </button>
                 </div>
             </details>
@@ -136,6 +149,20 @@
             <h2>Case File Archives</h2>
             
             <article class="example-category">
+                <h3>🔍 From Millennial to Gen Z</h3>
+                <div class="example-pair">
+                    <div class="example-original">
+                        <strong>Original:</strong>
+                        <p>"I'm literally dying! This is so extra! 😂💀"</p>
+                    </div>
+                    <div class="example-translation">
+                        <strong>Decoded:</strong>
+                        <p>"I'm dead fr! This is too much! 💀😭"</p>
+                    </div>
+                </div>
+            </article>
+
+            <article class="example-category">
                 <h3>🔍 From Gen Z to Boomer</h3>
                 <div class="example-pair">
                     <div class="example-original">
@@ -148,12 +175,26 @@
                     </div>
                 </div>
             </article>
+
+            <article class="example-category">
+                <h3>🔍 From Boomer to Millennial</h3>
+                <div class="example-pair">
+                    <div class="example-original">
+                        <strong>Original:</strong>
+                        <p>"That's the bee's knees! Groovy! ☎️📻"</p>
+                    </div>
+                    <div class="example-translation">
+                        <strong>Decoded:</strong>
+                        <p>"That's amazing! So cool! 📱💻"</p>
+                    </div>
+                </div>
+            </article>
         </section>
 
         <!-- Footer -->
         <footer class="site-footer">
-            <p>Case closed with vanilla HTML, CSS, and JavaScript 🕵️</p>
-            <p class="footer-sub">Investigating generational communication patterns since 2025 💬</p>
+            <p>Case closed with The Agents from CSE 210 @ UC San Diego </p>
+            <p class="footer-sub">Investigating communication since October 2025</p>
         </footer>
     </main>
 

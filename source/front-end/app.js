@@ -109,6 +109,7 @@ let currentEmojiTarget = null;
 const fromGenSelect = document.getElementById('from-generation');
 const toGenSelect = document.getElementById('to-generation');
 const swapButton = document.querySelector('.swap-button');
+const translateBtn = document.getElementById('translate-btn');
 const inputText = document.getElementById('input-text');
 const outputText = document.getElementById('output-text');
 const inputBadge = document.getElementById('input-badge');
@@ -165,18 +166,24 @@ function translateText(text, fromGen, toGen) {
   return result;
 }
 
-function updateTranslation() {
+function updateCharacterCount() {
+  const text = inputText.value;
+  inputCount.textContent = text.length;
+  
+  // Enable/disable translate button based on input
+  translateBtn.disabled = !text.trim();
+}
+
+function performTranslation() {
   const text = inputText.value;
   const fromGen = fromGenSelect.value;
   const toGen = toGenSelect.value;
-
-  // Update character counts
-  inputCount.textContent = text.length;
 
   if (!text.trim()) {
       outputText.innerHTML = '<p class="empty-state">Your decoded message will appear here...</p>';
       outputCount.textContent = '0';
       copyBtn.disabled = true;
+      translateBtn.disabled = true;
       return;
   }
 
@@ -184,6 +191,9 @@ function updateTranslation() {
   outputText.textContent = translated;
   outputCount.textContent = translated.length;
   copyBtn.disabled = false;
+  
+  // Visual feedback
+  showToast('Message decoded! 🔍');
 }
 
 function updateBadges() {
@@ -200,12 +210,20 @@ function swapGenerations() {
   toGenSelect.value = temp;
   
   updateBadges();
-  updateTranslation();
+  
+  // Clear output when swapping since translation needs to be manual
+  outputText.innerHTML = '<p class="empty-state">Your decoded message will appear here...</p>';
+  outputCount.textContent = '0';
+  copyBtn.disabled = true;
 }
 
 function clearInput() {
   inputText.value = '';
-  updateTranslation();
+  outputText.innerHTML = '<p class="empty-state">Your decoded message will appear here...</p>';
+  outputCount.textContent = '0';
+  inputCount.textContent = '0';
+  copyBtn.disabled = true;
+  translateBtn.disabled = true;
   inputText.focus();
 }
 
@@ -260,7 +278,12 @@ function loadExample(text, fromGen) {
   fromGenSelect.value = fromGen;
   inputText.value = text;
   updateBadges();
-  updateTranslation();
+  updateCharacterCount();
+  
+  // Clear output - user needs to click translate
+  outputText.innerHTML = '<p class="empty-state">Your decoded message will appear here...</p>';
+  outputCount.textContent = '0';
+  copyBtn.disabled = true;
   
   // Scroll to translator
   document.querySelector('.translator-section').scrollIntoView({ 
@@ -334,7 +357,7 @@ function insertEmoji(emoji) {
       inputText.setSelectionRange(newPosition, newPosition);
       inputText.focus();
       
-      updateTranslation();
+      updateCharacterCount();
   }
   
   closeEmojiPicker();
@@ -343,17 +366,25 @@ function insertEmoji(emoji) {
 // Event Listeners
 fromGenSelect.addEventListener('change', () => {
   updateBadges();
-  updateTranslation();
+  // Clear output when changing generations - user needs to click translate
+  outputText.innerHTML = '<p class="empty-state">Your decoded message will appear here...</p>';
+  outputCount.textContent = '0';
+  copyBtn.disabled = true;
 });
 
 toGenSelect.addEventListener('change', () => {
   updateBadges();
-  updateTranslation();
+  // Clear output when changing generations - user needs to click translate
+  outputText.innerHTML = '<p class="empty-state">Your decoded message will appear here...</p>';
+  outputCount.textContent = '0';
+  copyBtn.disabled = true;
 });
 
 swapButton.addEventListener('click', swapGenerations);
 
-inputText.addEventListener('input', updateTranslation);
+translateBtn.addEventListener('click', performTranslation);
+
+inputText.addEventListener('input', updateCharacterCount);
 
 copyBtn.addEventListener('click', copyToClipboard);
 
@@ -394,8 +425,14 @@ document.addEventListener('keydown', (e) => {
       e.preventDefault();
       openEmojiPicker('input');
   }
+  
+  // Enter to translate (when focused on input and not empty)
+  if (e.key === 'Enter' && document.activeElement === inputText && inputText.value.trim()) {
+      e.preventDefault();
+      performTranslation();
+  }
 });
 
 // Initialize
 updateBadges();
-updateTranslation();
+updateCharacterCount();
