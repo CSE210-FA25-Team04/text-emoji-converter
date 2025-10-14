@@ -1,438 +1,753 @@
-// Generational Translation Logic
+/**
+ * Generation Bridge Translator!
+ * Translates communication styles between Millennial, Gen Z, and Boomer generations
+ * 
+ */
+
+'use strict';
+
+// -------------------------------------------
+// Different Configuration and Data
+// -------------------------------------------
+
+/**
+ * Some starting patterns and rules for each generation combination
+ * Structure: translations[fromGeneration][toGeneration] = { patterns, suffix }
+ * MUST BE REPLACED BY LLM API!!!!!
+ * @const {Object}
+ */
 const translations = {
   millennial: {
-      genz: {
-          patterns: [
-              { from: /literally/gi, to: 'fr' },
-              { from: /dying/gi, to: 'dead' },
-              { from: /extra/gi, to: 'too much' },
-              { from: /amazing/gi, to: 'bussin' },
-              { from: /cool/gi, to: 'fire' },
-              { from: /awesome/gi, to: 'slaps' },
-              { from: /crazy/gi, to: 'wild' },
-              { from: /😂/g, to: '💀' },
-              { from: /💼/g, to: '💯' },
-              { from: /I'm /gi, to: "I'm " }
-          ],
-          suffix: ' fr fr'
-      },
-      boomer: {
-          patterns: [
-              { from: /literally/gi, to: 'really' },
-              { from: /extra/gi, to: 'excessive' },
-              { from: /amazing/gi, to: 'wonderful' },
-              { from: /cool/gi, to: 'neat' },
-              { from: /awesome/gi, to: 'excellent' },
-              { from: /😂/g, to: '😊' },
-              { from: /💀/g, to: '😄' },
-              { from: /💼/g, to: '📋' },
-              { from: /no cap/gi, to: 'honestly' },
-              { from: /fr fr/gi, to: 'really' }
-          ]
-      }
+    genz: {
+      patterns: [
+        { from: /literally/gi, to: 'fr' },
+        { from: /dying/gi, to: 'dead' },
+        { from: /extra/gi, to: 'too much' },
+        { from: /amazing/gi, to: 'bussin' },
+        { from: /cool/gi, to: 'fire' },
+        { from: /awesome/gi, to: 'slaps' },
+        { from: /crazy/gi, to: 'wild' },
+        { from: /😂/g, to: '💀' },
+        { from: /💼/g, to: '💯' },
+        { from: /I'm /gi, to: "I'm " }
+      ],
+      suffix: ' fr fr'
+    },
+    boomer: {
+      patterns: [
+        { from: /literally/gi, to: 'really' },
+        { from: /extra/gi, to: 'excessive' },
+        { from: /amazing/gi, to: 'wonderful' },
+        { from: /cool/gi, to: 'neat' },
+        { from: /awesome/gi, to: 'excellent' },
+        { from: /😂/g, to: '😊' },
+        { from: /💀/g, to: '😄' },
+        { from: /💼/g, to: '📋' },
+        { from: /no cap/gi, to: 'honestly' },
+        { from: /fr fr/gi, to: 'really' }
+      ]
+    }
   },
   genz: {
-      millennial: {
-          patterns: [
-              { from: /fr fr/gi, to: 'literally' },
-              { from: /\bfr\b/gi, to: 'seriously' },
-              { from: /no cap/gi, to: 'no lie' },
-              { from: /bussin/gi, to: 'amazing' },
-              { from: /slaps/gi, to: 'rocks' },
-              { from: /fire/gi, to: 'awesome' },
-              { from: /dead/gi, to: 'dying' },
-              { from: /💀/g, to: '😂' },
-              { from: /💯/g, to: '👍' }
-          ]
-      },
-      boomer: {
-          patterns: [
-              { from: /fr fr/gi, to: 'really' },
-              { from: /\bfr\b/gi, to: 'truly' },
-              { from: /no cap/gi, to: 'honestly' },
-              { from: /bussin/gi, to: 'excellent' },
-              { from: /slaps/gi, to: 'is great' },
-              { from: /fire/gi, to: 'wonderful' },
-              { from: /dead/gi, to: 'laughing' },
-              { from: /bruh/gi, to: 'buddy' },
-              { from: /💀/g, to: '😊' },
-              { from: /💯/g, to: '👍' },
-              { from: /🔥/g, to: '⭐' }
-          ]
-      }
+    millennial: {
+      patterns: [
+        { from: /fr fr/gi, to: 'literally' },
+        { from: /\bfr\b/gi, to: 'seriously' },
+        { from: /no cap/gi, to: 'no lie' },
+        { from: /bussin/gi, to: 'amazing' },
+        { from: /slaps/gi, to: 'rocks' },
+        { from: /fire/gi, to: 'awesome' },
+        { from: /dead/gi, to: 'dying' },
+        { from: /💀/g, to: '😂' },
+        { from: /💯/g, to: '👍' }
+      ]
+    },
+    boomer: {
+      patterns: [
+        { from: /fr fr/gi, to: 'really' },
+        { from: /\bfr\b/gi, to: 'truly' },
+        { from: /no cap/gi, to: 'honestly' },
+        { from: /bussin/gi, to: 'excellent' },
+        { from: /slaps/gi, to: 'is great' },
+        { from: /fire/gi, to: 'wonderful' },
+        { from: /dead/gi, to: 'laughing' },
+        { from: /bruh/gi, to: 'buddy' },
+        { from: /💀/g, to: '😊' },
+        { from: /💯/g, to: '👍' },
+        { from: /🔥/g, to: '⭐' }
+      ]
+    }
   },
   boomer: {
-      millennial: {
-          patterns: [
-              { from: /the bee's knees/gi, to: 'amazing' },
-              { from: /groovy/gi, to: 'cool' },
-              { from: /excellent/gi, to: 'awesome' },
-              { from: /wonderful/gi, to: 'great' },
-              { from: /neat/gi, to: 'cool' },
-              { from: /swell/gi, to: 'nice' },
-              { from: /☎️/g, to: '📱' },
-              { from: /📻/g, to: '💻' },
-              { from: /📋/g, to: '💼' }
-          ]
-      },
-      genz: {
-          patterns: [
-              { from: /the bee's knees/gi, to: 'bussin' },
-              { from: /groovy/gi, to: 'fire' },
-              { from: /excellent/gi, to: 'slaps' },
-              { from: /wonderful/gi, to: 'fire' },
-              { from: /neat/gi, to: 'cool' },
-              { from: /honestly/gi, to: 'no cap' },
-              { from: /really/gi, to: 'fr' },
-              { from: /☎️/g, to: '📱' },
-              { from: /📻/g, to: '💻' },
-              { from: /😊/g, to: '💀' },
-              { from: /👍/g, to: '💯' }
-          ],
-          suffix: ' fr'
-      }
+    millennial: {
+      patterns: [
+        { from: /the bee's knees/gi, to: 'amazing' },
+        { from: /groovy/gi, to: 'cool' },
+        { from: /excellent/gi, to: 'awesome' },
+        { from: /wonderful/gi, to: 'great' },
+        { from: /neat/gi, to: 'cool' },
+        { from: /swell/gi, to: 'nice' },
+        { from: /☎️/g, to: '📱' },
+        { from: /📻/g, to: '💻' },
+        { from: /📋/g, to: '💼' }
+      ]
+    },
+    genz: {
+      patterns: [
+        { from: /the bee's knees/gi, to: 'bussin' },
+        { from: /groovy/gi, to: 'fire' },
+        { from: /excellent/gi, to: 'slaps' },
+        { from: /wonderful/gi, to: 'fire' },
+        { from: /neat/gi, to: 'cool' },
+        { from: /honestly/gi, to: 'no cap' },
+        { from: /really/gi, to: 'fr' },
+        { from: /☎️/g, to: '📱' },
+        { from: /📻/g, to: '💻' },
+        { from: /😊/g, to: '💀' },
+        { from: /👍/g, to: '💯' }
+      ],
+      suffix: ' fr'
+    }
   }
 };
 
-// Emoji categories
+/**
+ * Emoji data organized by categories for the emoji picker
+ * @const {Object}
+ */
 const emojiData = {
-  smileys: ['😀', '😃', '😄', '😁', '😆', '😅', '🤣', '😂', '🙂', '🙃', '😉', '😊', '😇', '🥰', '😍', '🤩', '😘', '😗', '😚', '😙', '🥲', '😋', '😛', '😜', '🤪', '😝', '🤑', '🤗', '🤭', '🤫', '🤔', '🤐', '🤨', '😐', '😑', '😶', '😏', '😒', '🙄', '😬', '🤥', '😌', '😔', '😪', '🤤', '😴', '😷', '🤒', '🤕', '🤢', '🤮', '🤧', '🥵', '🥶', '😶‍🌫️', '🥴', '😵', '🤯', '🤠', '🥳', '😎', '🤓', '🧐', '😕', '😟', '🙁', '☹️', '😮', '😯', '😲', '😳', '🥺', '😦', '😧', '😨', '😰', '😥', '😢', '😭', '😱', '😖', '😣', '😞', '😓', '😩', '😫', '🥱', '😤', '😡', '😠', '🤬', '💀', '☠️'],
+  smileys: ['😀', '😃', '😄', '😁', '😆', '😅', '🤣', '😂', '🙂', '🙃', '😉', '😊', '😇', '🥰', '😍', '🤩', '😘', '😗', '😚', '😙', '🥲', '😋', '😛', '😜', '🤪', '😝', '🤑', '🤗', '🤭', '🤫', '🤔', '🤐', '🤨', '😐', '😑', '😶', '😏', '😒', '🙄', '😬', '🤥', '😌', '😔', '😪', '🤤', '😴', '😷', '🤒', '🤕', '🤢', '🤮', '🤧', '🥵', '🥶', '🥴', '😵', '🤯', '🤠', '🥳', '😎', '🤓', '🧐', '😕', '😟', '🙁', '☹️', '😮', '😯', '😲', '😳', '🥺', '😦', '😧', '😨', '😰', '😥', '😢', '😭', '😱', '😖', '😣', '😞', '😓', '😩', '😫', '🥱', '😤', '😡', '😠', '🤬', '💀', '☠️'],
   gestures: ['👋', '🤚', '🖐', '✋', '🖖', '👌', '🤌', '🤏', '✌️', '🤞', '🤟', '🤘', '🤙', '👈', '👉', '👆', '🖕', '👇', '☝️', '👍', '👎', '✊', '👊', '🤛', '🤜', '👏', '🙌', '👐', '🤲', '🤝', '🙏', '✍️', '💅', '🤳', '💪', '🦾', '🦿', '🦵', '🦶', '👂', '🦻', '👃', '🧠', '🦷', '🦴', '👀', '👁', '👅', '👄'],
   objects: ['💼', '📁', '📂', '📅', '📆', '📇', '📈', '📉', '📊', '📋', '📌', '📍', '📎', '📏', '📐', '✂️', '🗃', '🗄', '🗑', '🔒', '🔓', '🔏', '🔐', '🔑', '🗝', '🔨', '🪓', '⛏', '⚒', '🛠', '🗡', '⚔️', '🔫', '🏹', '🛡', '🔧', '🔩', '⚙️', '🗜', '⚖️', '🦯', '🔗', '⛓', '🧰', '🧲', '📱', '💻', '⌨️', '🖥', '🖨', '🖱', '🖲', '💽', '💾', '💿', '📀', '🧮', '🎥', '🎬', '📷', '📸', '📹', '📼', '🔍', '🔎', '🕯', '💡', '🔦', '🏮', '📔', '📕', '📖', '📗', '📘', '📙', '📚', '📓', '📒', '📃', '📜', '📄', '📰', '🗞', '📑', '🔖', '🏷'],
   symbols: ['❤️', '🧡', '💛', '💚', '💙', '💜', '🖤', '🤍', '🤎', '💔', '❣️', '💕', '💞', '💓', '💗', '💖', '💘', '💝', '💟', '☮️', '✝️', '☪️', '🕉', '☸️', '✡️', '🔯', '🕎', '☯️', '☦️', '🛐', '⛎', '♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓', '🆔', '⚛️', '🉑', '☢️', '☣️', '📴', '📳', '🈶', '🈚', '🈸', '🈺', '🈷️', '✴️', '🆚', '💮', '🉐', '㊙️', '㊗️', '🈴', '🈵', '🈹', '🈲', '🅰️', '🅱️', '🆎', '🆑', '🅾️', '🆘', '❌', '⭕', '🛑', '⛔', '📛', '🚫', '💯', '💢', '♨️', '🚷', '🚯', '🚳', '🚱', '🔞', '📵', '🚭', '❗', '❕', '❓', '❔', '‼️', '⁉️', '🔅', '🔆', '〽️', '⚠️', '🚸', '🔱', '⚜️', '🔰', '♻️', '✅', '🈯', '💹', '❇️', '✳️', '❎', '🌐', '💠', '🔠', '🔡', '🔢', '🔣', '🔤', '🆗', '🆙', '🆒', '🆕', '🆓', '🔟', '🔴', '🟠', '🟡', '🟢', '🔵', '🟣', '⚫', '⚪', '🟤', '🔺', '🔻', '🔸', '🔹', '🔶', '🔷', '🔳', '🔲', '▪️', '▫️', '◾', '◽', '◼️', '◻️', '🟥', '🟧', '🟨', '🟩', '🟦', '🟪', '⬛', '⬜', '🟫']
 };
 
-// State
-let currentEmojiTarget = null;
+/**
+ * Generation display labels mapping
+ * @const {Object}
+ */
+const GENERATION_LABELS = {
+  millennial: 'Millennial',
+  genz: 'Gen Z',
+  boomer: 'Boomer'
+};
 
+/**
+ * Toast notification duration in milliseconds
+ * @const {number}
+ */
+const TOAST_DURATION = 3000;
+/**
+ * Toast hide animation duration in milliseconds
+ * @const {number}
+ */
+const TOAST_HIDE_DURATION = 250;
+
+// -------------------------------------------
+// Application State
+// -------------------------------------------
+
+/**
+ * Application state object
+ * Tracks the current emoji picker target
+ */
+const state = {
+  /** @type {string|null} Current target for emoji insertion ('input' or null) */
+  currentEmojiTarget: null
+};
+
+// -------------------------------------------
 // DOM Elements
-const fromGenSelect = document.getElementById('from-generation');
-const toGenSelect = document.getElementById('to-generation');
-const swapButton = document.querySelector('.swap-button');
-const translateBtn = document.getElementById('translate-btn');
-const inputText = document.getElementById('input-text');
-const outputText = document.getElementById('output-text');
-const inputBadge = document.getElementById('input-badge');
-const outputBadge = document.getElementById('output-badge');
-const inputCount = document.getElementById('input-count');
-const outputCount = document.getElementById('output-count');
-const copyBtn = document.querySelector('.copy-btn');
-const clearBtn = document.querySelector('.clear-btn');
-const emojiBtn = document.querySelector('.emoji-btn');
-const exampleBtns = document.querySelectorAll('.example-btn');
-const toggleExamplesBtn = document.getElementById('toggle-examples');
-const examplesSection = document.getElementById('examples-section');
-const emojiPicker = document.getElementById('emoji-picker');
-const emojiGrid = document.getElementById('emoji-grid');
-const categoryBtns = document.querySelectorAll('.category-btn');
-const closeEmojiPickerBtn = document.querySelector('.close-btn');
-const emojiPickerBackdrop = document.querySelector('.emoji-picker-backdrop');
-const toast = document.getElementById('toast');
+// -------------------------------------------
+/**
+ * Cache all DOM elements on initialization to avoid repeated queries
+ * @const {Object}
+ */
+const elements = {
+  // Generation selectors
+  fromGenSelect: document.getElementById('from-generation'),
+  toGenSelect: document.getElementById('to-generation'),
+  swapButton: document.querySelector('.swap-button'),
+  
+  // Main interaction elements
+  translateBtn: document.getElementById('translate-btn'),
+  inputText: document.getElementById('input-text'),
+  outputText: document.getElementById('output-text'),
+  
+  // Badges
+  inputBadge: document.getElementById('input-badge'),
+  outputBadge: document.getElementById('output-badge'),
+  
+  // Character counters
+  inputCount: document.getElementById('input-count'),
+  outputCount: document.getElementById('output-count'),
+  
+  // Action buttons
+  copyBtn: document.querySelector('.copy-btn'),
+  clearBtn: document.querySelector('.clear-btn'),
+  emojiBtn: document.querySelector('.emoji-btn'),
+  
+  // Example functionality
+  exampleBtns: document.querySelectorAll('.example-btn'),
+  toggleExamplesBtn: document.getElementById('toggle-examples'),
+  examplesSection: document.getElementById('examples-section'),
+  
+  // Emoji picker elements
+  emojiPicker: document.getElementById('emoji-picker'),
+  emojiGrid: document.getElementById('emoji-grid'),
+  categoryBtns: document.querySelectorAll('.category-btn'),
+  closeEmojiPickerBtn: document.querySelector('.close-btn'),
+  emojiPickerBackdrop: document.querySelector('.emoji-picker-backdrop'),
+  
+  // Toast notification
+  toast: document.getElementById('toast')
+};
 
-// Helper Functions
-function getGenerationLabel(value) {
-  const labels = {
-      millennial: 'Millennial',
-      genz: 'Gen Z',
-      boomer: 'Boomer'
-  };
-  return labels[value] || value;
-}
+// -------------------------------------------
+// Core Translation Feature
+// -------------------------------------------
 
+// Comment - Must be replaced by backend team!
+/**
+ * Translates text from one generation's communication style to another
+ * 
+ * @param {string} text - The input text to translate
+ * @param {string} fromGen - Source generation ('millennial', 'genz', or 'boomer')
+ * @param {string} toGen - Target generation ('millennial', 'genz', or 'boomer')
+ * @returns {string} The translated text
+ */
 function translateText(text, fromGen, toGen) {
+  // A demo version using Helena's implementation from lookup table..
+  // need to be replaced
+  // Return original text if empty or translating to same generation
   if (!text.trim() || fromGen === toGen) {
-      return text;
+    return text;
   }
 
-  const translationMap = translations[fromGen]?.[toGen];
+  // Get translation map for this generation pair
+  const translationMap = translations[fromGen] && translations[fromGen][toGen];
   if (!translationMap) {
-      return text;
+    return text;
   }
 
   let result = text;
   
-  // Apply pattern replacements
+  // Apply all pattern-based replacements sequentially
   if (translationMap.patterns) {
-      translationMap.patterns.forEach(({ from, to }) => {
-          result = result.replace(from, to);
-      });
+    translationMap.patterns.forEach(function(pattern) {
+      result = result.replace(pattern.from, pattern.to);
+    });
   }
 
-  // Add suffix if defined
+  // Add generation-specific suffix if defined and not already present
   if (translationMap.suffix && result.trim() && !result.endsWith(translationMap.suffix)) {
-      result = result.trim() + translationMap.suffix;
+    result = result.trim() + translationMap.suffix;
   }
 
   return result;
 }
 
-function updateCharacterCount() {
-  const text = inputText.value;
-  inputCount.textContent = text.length;
-  
-  // Enable/disable translate button based on input
-  translateBtn.disabled = !text.trim();
+// -------------------------------------------
+// Utility Functions
+// -------------------------------------------
+/**
+ * Converts generation value to human-readable label
+ * 
+ * @param {string} value - Generation identifier ('millennial', 'genz', or 'boomer')
+ * @returns {string} Human-readable label
+ */
+function getGenerationLabel(value) {
+  return GENERATION_LABELS[value] || value;
 }
 
-function performTranslation() {
-  const text = inputText.value;
-  const fromGen = fromGenSelect.value;
-  const toGen = toGenSelect.value;
+/**
+ * Updates the generation badge labels in the UI
+ * Reflects current selected generations in input/output sections
+ */
+function updateBadges() {
+  const fromGen = elements.fromGenSelect.value;
+  const toGen = elements.toGenSelect.value;
+  
+  elements.inputBadge.textContent = getGenerationLabel(fromGen);
+  elements.outputBadge.textContent = getGenerationLabel(toGen);
+}
 
+/**
+ * Updates the character count display for input text
+ * Also manages translate button state based on input presence
+ */
+function updateCharacterCount() {
+  const text = elements.inputText.value;
+  elements.inputCount.textContent = text.length;
+  
+  // Enable translate button only when there's text to translate
+  elements.translateBtn.disabled = !text.trim();
+}
+
+/**
+ * Displays a temporary toast notification
+ * Automatically hides after TOAST_DURATION milliseconds
+ * 
+ * @param {string} message - Message to display in the toast
+ * @param {boolean} [isError=false] - Whether this is an error message
+ */
+function showToast(message, isError) {
+  if (isError === undefined) isError = false;
+  
+  elements.toast.textContent = message;
+  elements.toast.classList.remove('hidden', 'hiding');
+  
+  // Set toast styling based on message type
+  if (isError) {
+    elements.toast.style.background = 'var(--color-danger)';
+    elements.toast.style.color = 'var(--color-text-primary)';
+  } else {
+    elements.toast.style.background = 'var(--color-amber)';
+    elements.toast.style.color = 'var(--color-noir-black)';
+  }
+  
+  // Auto-hide toast after duration
+  setTimeout(function() {
+    elements.toast.classList.add('hiding');
+    setTimeout(function() {
+      elements.toast.classList.add('hidden');
+      elements.toast.classList.remove('hiding');
+    }, TOAST_HIDE_DURATION);
+  }, TOAST_DURATION);
+}
+
+/**
+ * Smoothly scrolls to the translator section
+ * Used when loading examples to focus user attention
+ */
+function scrollToTranslator() {
+  const translatorSection = document.querySelector('.translator-section');
+  if (translatorSection) {
+    translatorSection.scrollIntoView({ 
+      behavior: 'smooth', 
+      block: 'start' 
+    });
+  }
+}
+
+// -------------------------------------------
+// Operations for Translation
+// -------------------------------------------
+/**
+ * Performs the translation operation
+ * Takes input text and translates it from source to target generation
+ * Updates the output display with results
+ */
+function performTranslation() {
+  const text = elements.inputText.value;
+  const fromGen = elements.fromGenSelect.value;
+  const toGen = elements.toGenSelect.value;
+
+  // Handle empty input case
   if (!text.trim()) {
-      outputText.innerHTML = '<p class="empty-state">Your decoded message will appear here...</p>';
-      outputCount.textContent = '0';
-      copyBtn.disabled = true;
-      translateBtn.disabled = true;
-      return;
+    elements.outputText.innerHTML = '<p class="empty-state">Your decoded message will appear here...</p>';
+    elements.outputCount.textContent = '0';
+    elements.copyBtn.disabled = true;
+    elements.translateBtn.disabled = true;
+    return;
   }
 
+  // Perform translation
   const translated = translateText(text, fromGen, toGen);
-  outputText.textContent = translated;
-  outputCount.textContent = translated.length;
-  copyBtn.disabled = false;
+  elements.outputText.textContent = translated;
+  elements.outputCount.textContent = translated.length;
+  elements.copyBtn.disabled = false;
   
-  // Visual feedback
+  // Provide user feedback
   showToast('Message decoded! 🔍');
 }
 
-function updateBadges() {
-  const fromGen = fromGenSelect.value;
-  const toGen = toGenSelect.value;
-  
-  inputBadge.textContent = getGenerationLabel(fromGen);
-  outputBadge.textContent = getGenerationLabel(toGen);
-}
+/**
+ * Swaps the source and target generation selections
+ * Clears the output as the translation direction has changed
+ */
 
 function swapGenerations() {
-  const temp = fromGenSelect.value;
-  fromGenSelect.value = toGenSelect.value;
-  toGenSelect.value = temp;
+  const temp = elements.fromGenSelect.value;
+  elements.fromGenSelect.value = elements.toGenSelect.value;
+  elements.toGenSelect.value = temp;
   
   updateBadges();
   
-  // Clear output when swapping since translation needs to be manual
-  outputText.innerHTML = '<p class="empty-state">Your decoded message will appear here...</p>';
-  outputCount.textContent = '0';
-  copyBtn.disabled = true;
+  // Clear output since translation direction changed
+  elements.outputText.innerHTML = '<p class="empty-state">Your decoded message will appear here...</p>';
+  elements.outputCount.textContent = '0';
+  elements.copyBtn.disabled = true;
 }
 
+/**
+ * Clears all input and output fields
+ * Resets the application to initial state
+ */
 function clearInput() {
-  inputText.value = '';
-  outputText.innerHTML = '<p class="empty-state">Your decoded message will appear here...</p>';
-  outputCount.textContent = '0';
-  inputCount.textContent = '0';
-  copyBtn.disabled = true;
-  translateBtn.disabled = true;
-  inputText.focus();
+  elements.inputText.value = '';
+  elements.outputText.innerHTML = '<p class="empty-state">Your decoded message will appear here...</p>';
+  elements.outputCount.textContent = '0';
+  elements.inputCount.textContent = '0';
+  elements.copyBtn.disabled = true;
+  elements.translateBtn.disabled = true;
+  elements.inputText.focus();
 }
 
-async function copyToClipboard() {
-  const text = outputText.textContent;
+// -------------------------------------------
+// Clipboard Operation
+// -------------------------------------------
+/**
+ * Copies the translated output text to the system clipboard
+ * Falls back to legacy execCommand for older browsers
+ * Provides user feedback via toast notification
+ * 
+ * @returns {Promise<void>}
+ */
+function copyToClipboard() {
+  const text = elements.outputText.textContent;
+  
+  // Try modern clipboard API first
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text)
+      .then(function() {
+        showToast('Copied to clipboard! 📋');
+      })
+      .catch(function(err) {
+        console.error('Clipboard write failed:', err);
+        fallbackCopy(text);
+      });
+  } else {
+    // Fallback for older browsers
+    fallbackCopy(text);
+  }
+}
+
+/**
+ * Fallback clipboard copy implementation using execCommand
+ * Used when modern Clipboard API is not available
+ * 
+ * @param {string} text - Text to copy to clipboard
+ */
+function fallbackCopy(text) {
+  const textArea = document.createElement('textarea');
+  textArea.value = text;
+  textArea.style.position = 'fixed';
+  textArea.style.left = '-999999px';
+  textArea.style.top = '-999999px';
+  document.body.appendChild(textArea);
+  textArea.select();
   
   try {
-      await navigator.clipboard.writeText(text);
-      showToast('Copied to clipboard! 📋');
+    document.execCommand('copy');
+    showToast('Copied to clipboard! 📋');
   } catch (err) {
-      // Fallback for older browsers
-      const textArea = document.createElement('textarea');
-      textArea.value = text;
-      textArea.style.position = 'fixed';
-      textArea.style.left = '-999999px';
-      document.body.appendChild(textArea);
-      textArea.select();
-      
-      try {
-          document.execCommand('copy');
-          showToast('Copied to clipboard! 📋');
-      } catch (err) {
-          showToast('Failed to copy text', true);
-      }
-      
-      document.body.removeChild(textArea);
-  }
-}
-
-function showToast(message, isError = false) {
-  toast.textContent = message;
-  toast.classList.remove('hidden', 'hiding');
-  
-  if (isError) {
-      toast.style.background = 'var(--color-danger)';
-      toast.style.color = 'var(--color-text-primary)';
-  } else {
-      toast.style.background = 'var(--color-amber)';
-      toast.style.color = 'var(--color-noir-black)';
+    console.error('Fallback copy failed:', err);
+    showToast('Failed to copy text', true);
   }
   
-  setTimeout(() => {
-      toast.classList.add('hiding');
-      setTimeout(() => {
-          toast.classList.add('hidden');
-          toast.classList.remove('hiding');
-      }, 250);
-  }, 3000);
+  document.body.removeChild(textArea);
 }
 
+// -------------------------------------------
+// Example Functionality
+// -------------------------------------------
+/**
+ * Loads a pre-defined example into the input field
+ * Sets the appropriate source generation and prepares for translation
+ * 
+ * @param {string} text - Example text to load
+ * @param {string} fromGen - Source generation for the example
+ */
 function loadExample(text, fromGen) {
-  fromGenSelect.value = fromGen;
-  inputText.value = text;
+  elements.fromGenSelect.value = fromGen;
+  elements.inputText.value = text;
   updateBadges();
   updateCharacterCount();
   
-  // Clear output - user needs to click translate
-  outputText.innerHTML = '<p class="empty-state">Your decoded message will appear here...</p>';
-  outputCount.textContent = '0';
-  copyBtn.disabled = true;
+  // Clear output - user needs to click translate button
+  elements.outputText.innerHTML = '<p class="empty-state">Your decoded message will appear here...</p>';
+  elements.outputCount.textContent = '0';
+  elements.copyBtn.disabled = true;
   
-  // Scroll to translator
-  document.querySelector('.translator-section').scrollIntoView({ 
-      behavior: 'smooth', 
-      block: 'start' 
-  });
+  // Scroll to translator for better UX
+  scrollToTranslator();
 }
 
+/**
+ * Toggles the visibility of the examples section
+ * Updates button text to reflect current state
+ */
 function toggleExamples() {
-  const isHidden = examplesSection.classList.contains('hidden');
+  const isHidden = elements.examplesSection.classList.contains('hidden');
   
   if (isHidden) {
-      examplesSection.classList.remove('hidden');
-      toggleExamplesBtn.textContent = 'Hide Case Examples';
+    elements.examplesSection.classList.remove('hidden');
+    elements.toggleExamplesBtn.textContent = 'Hide Case Examples';
   } else {
-      examplesSection.classList.add('hidden');
-      toggleExamplesBtn.textContent = 'Show Case Examples';
+    elements.examplesSection.classList.add('hidden');
+    elements.toggleExamplesBtn.textContent = 'Show Case Examples';
   }
 }
 
+// -------------------------------------------
+// Emoji Picker Functionality
+// -------------------------------------------
+/**
+ * Opens the emoji picker modal
+ * Sets the target for emoji insertion and loads default category
+ * 
+ * @param {string} target - Target identifier for emoji insertion ('input')
+ */
 function openEmojiPicker(target) {
-  currentEmojiTarget = target;
-  emojiPicker.classList.remove('hidden');
-  document.body.style.overflow = 'hidden';
+  state.currentEmojiTarget = target;
+  elements.emojiPicker.classList.remove('hidden');
+  document.body.style.overflow = 'hidden'; // Prevent background scrolling
   
-  // Load default category
+  // Load default emoji category
   loadEmojiCategory('smileys');
 }
 
+/**
+ * Closes the emoji picker modal
+ * Restores body scroll and clears the insertion target
+ */
 function closeEmojiPicker() {
-  emojiPicker.classList.add('hidden');
+  elements.emojiPicker.classList.add('hidden');
   document.body.style.overflow = '';
-  currentEmojiTarget = null;
+  state.currentEmojiTarget = null;
 }
 
+/**
+ * Loads and displays emojis for a specific category
+ * Renders emoji buttons in the grid and updates active category indicator
+ * 
+ * @param {string} category - Category name ('smileys', 'gestures', 'objects', 'symbols')
+ */
 function loadEmojiCategory(category) {
   const emojis = emojiData[category] || [];
   
-  emojiGrid.innerHTML = '';
+  // Clear existing emoji grid
+  elements.emojiGrid.innerHTML = '';
   
-  emojis.forEach(emoji => {
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'emoji-btn-item';
-      button.textContent = emoji;
-      button.setAttribute('aria-label', `Insert ${emoji}`);
-      button.addEventListener('click', () => insertEmoji(emoji));
-      emojiGrid.appendChild(button);
+  // Create button for each emoji in category
+  emojis.forEach(function(emoji) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'emoji-btn-item';
+    button.textContent = emoji;
+    button.setAttribute('aria-label', 'Insert ' + emoji);
+    
+    // Bind click handler for emoji insertion
+    button.addEventListener('click', function() {
+      insertEmoji(emoji);
+    });
+    
+    elements.emojiGrid.appendChild(button);
   });
   
-  // Update active category
-  categoryBtns.forEach(btn => {
-      if (btn.dataset.category === category) {
-          btn.classList.add('active');
-      } else {
-          btn.classList.remove('active');
-      }
+  // Update active category button styling
+  elements.categoryBtns.forEach(function(btn) {
+    if (btn.dataset.category === category) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
   });
 }
 
+/**
+ * Inserts an emoji at the current cursor position in the input field
+ * Maintains cursor position after insertion and updates character count
+ * 
+ * @param {string} emoji - Emoji character to insert
+ */
 function insertEmoji(emoji) {
-  if (currentEmojiTarget === 'input') {
-      const start = inputText.selectionStart;
-      const end = inputText.selectionEnd;
-      const text = inputText.value;
-      
-      inputText.value = text.substring(0, start) + emoji + text.substring(end);
-      
-      // Set cursor position after emoji
-      const newPosition = start + emoji.length;
-      inputText.setSelectionRange(newPosition, newPosition);
-      inputText.focus();
-      
-      updateCharacterCount();
+  if (state.currentEmojiTarget === 'input') {
+    const start = elements.inputText.selectionStart;
+    const end = elements.inputText.selectionEnd;
+    const text = elements.inputText.value;
+    
+    // Insert emoji at cursor position
+    elements.inputText.value = text.substring(0, start) + emoji + text.substring(end);
+    
+    // Set cursor position after inserted emoji
+    const newPosition = start + emoji.length;
+    elements.inputText.setSelectionRange(newPosition, newPosition);
+    elements.inputText.focus();
+    
+    updateCharacterCount();
   }
   
   closeEmojiPicker();
 }
 
-// Event Listeners
-fromGenSelect.addEventListener('change', () => {
+// -------------------------------------------
+// Event Handlers
+// -------------------------------------------
+/**
+ * Handler for generation selection changes
+ * Resets output when user changes translation parameters
+ */
+function handleGenerationChange() {
   updateBadges();
-  // Clear output when changing generations - user needs to click translate
-  outputText.innerHTML = '<p class="empty-state">Your decoded message will appear here...</p>';
-  outputCount.textContent = '0';
-  copyBtn.disabled = true;
-});
+  // Clear output when changing generations - user must re-translate
+  elements.outputText.innerHTML = '<p class="empty-state">Your decoded message will appear here...</p>';
+  elements.outputCount.textContent = '0';
+  elements.copyBtn.disabled = true;
+}
 
-toGenSelect.addEventListener('change', () => {
-  updateBadges();
-  // Clear output when changing generations - user needs to click translate
-  outputText.innerHTML = '<p class="empty-state">Your decoded message will appear here...</p>';
-  outputCount.textContent = '0';
-  copyBtn.disabled = true;
-});
+/**
+ * Handler for example button clicks
+ * Extracts example data and loads it into the application
+ * 
+ * @param {Event} event - Click event
+ */
+function handleExampleClick(event) {
+  const button = event.currentTarget;
+  const text = button.dataset.text;
+  const fromGen = button.dataset.from;
+  
+  if (text && fromGen) {
+    loadExample(text, fromGen);
+  }
+}
 
-swapButton.addEventListener('click', swapGenerations);
+/**
+ * Handler for category button clicks in emoji picker
+ * Loads the selected emoji category
+ * 
+ * @param {Event} event - Click event
+ */
+function handleCategoryClick(event) {
+  const button = event.currentTarget;
+  const category = button.dataset.category;
+  
+  if (category) {
+    loadEmojiCategory(category);
+  }
+}
 
-translateBtn.addEventListener('click', performTranslation);
-
-inputText.addEventListener('input', updateCharacterCount);
-
-copyBtn.addEventListener('click', copyToClipboard);
-
-clearBtn.addEventListener('click', clearInput);
-
-emojiBtn.addEventListener('click', () => openEmojiPicker('input'));
-
-exampleBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-      const text = btn.dataset.text;
-      const fromGen = btn.dataset.from;
-      loadExample(text, fromGen);
-  });
-});
-
-toggleExamplesBtn.addEventListener('click', toggleExamples);
-
-closeEmojiPickerBtn.addEventListener('click', closeEmojiPicker);
-
-emojiPickerBackdrop.addEventListener('click', closeEmojiPicker);
-
-categoryBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-      const category = btn.dataset.category;
-      loadEmojiCategory(category);
-  });
-});
-
-// Keyboard shortcuts
-document.addEventListener('keydown', (e) => {
-  // Escape to close emoji picker
-  if (e.key === 'Escape' && !emojiPicker.classList.contains('hidden')) {
-      closeEmojiPicker();
+/**
+ * Global keyboard event handler
+ * Implements keyboard shortcuts for improved accessibility
+ * 
+ * @param {KeyboardEvent} event - Keyboard event
+ */
+function handleKeyboardShortcuts(event) {
+  // Escape key: Close emoji picker
+  if (event.key === 'Escape' && !elements.emojiPicker.classList.contains('hidden')) {
+    closeEmojiPicker();
+    return;
   }
   
-  // Ctrl/Cmd + K to open emoji picker (when focused on input)
-  if ((e.ctrlKey || e.metaKey) && e.key === 'k' && document.activeElement === inputText) {
-      e.preventDefault();
-      openEmojiPicker('input');
+  // Ctrl/Cmd + K: Open emoji picker (when focused on input)
+  if ((event.ctrlKey || event.metaKey) && event.key === 'k' && 
+      document.activeElement === elements.inputText) {
+    event.preventDefault();
+    openEmojiPicker('input');
+    return;
   }
   
-  // Enter to translate (when focused on input and not empty)
-  if (e.key === 'Enter' && document.activeElement === inputText && inputText.value.trim()) {
-      e.preventDefault();
-      performTranslation();
+  // Enter key: Translate (when focused on input with text)
+  if (event.key === 'Enter' && 
+      document.activeElement === elements.inputText && 
+      elements.inputText.value.trim()) {
+    event.preventDefault();
+    performTranslation();
+    return;
   }
-});
+}
 
-// Initialize
-updateBadges();
-updateCharacterCount();
+// -------------------------------------------
+// An Event Listener
+// -------------------------------------------
+/**
+ * Registers all event listeners for the application
+ */
+function registerEventListeners() {
+  // Generation selection changes
+  elements.fromGenSelect.addEventListener('change', handleGenerationChange);
+  elements.toGenSelect.addEventListener('change', handleGenerationChange);
+  
+  // Main action buttons
+  elements.swapButton.addEventListener('click', swapGenerations);
+  elements.translateBtn.addEventListener('click', performTranslation);
+  elements.copyBtn.addEventListener('click', copyToClipboard);
+  elements.clearBtn.addEventListener('click', clearInput);
+  
+  // Input field changes
+  elements.inputText.addEventListener('input', updateCharacterCount);
+  
+  // Emoji picker controls
+  elements.emojiBtn.addEventListener('click', function() {
+    openEmojiPicker('input');
+  });
+  elements.closeEmojiPickerBtn.addEventListener('click', closeEmojiPicker);
+  elements.emojiPickerBackdrop.addEventListener('click', closeEmojiPicker);
+  
+  // Emoji category buttons
+  elements.categoryBtns.forEach(function(btn) {
+    btn.addEventListener('click', handleCategoryClick);
+  });
+  
+  // Example functionality
+  elements.exampleBtns.forEach(function(btn) {
+    btn.addEventListener('click', handleExampleClick);
+  });
+  elements.toggleExamplesBtn.addEventListener('click', toggleExamples);
+  
+  // Global keyboard shortcuts
+  document.addEventListener('keydown', handleKeyboardShortcuts);
+}
+
+// -------------------------------------------
+// Main Initialization
+// -------------------------------------------
+/**
+ * Initializes the application
+ * Sets up initial UI state and registers all event listeners
+ * Called when DOM is fully loaded
+ */
+function initializeApp() {
+  // Validate that all required elements exist
+  const requiredElements = [
+    'fromGenSelect', 'toGenSelect', 'swapButton', 'translateBtn',
+    'inputText', 'outputText', 'inputBadge', 'outputBadge',
+    'inputCount', 'outputCount', 'copyBtn', 'clearBtn', 'emojiBtn',
+    'toggleExamplesBtn', 'examplesSection', 'emojiPicker', 'emojiGrid',
+    'closeEmojiPickerBtn', 'emojiPickerBackdrop', 'toast'
+  ];
+  
+  const missingElements = requiredElements.filter(function(key) {
+    return !elements[key];
+  });
+  
+  if (missingElements.length > 0) {
+    console.error('Missing required DOM elements:', missingElements);
+    return;
+  }
+  
+  // Set initial UI state
+  updateBadges();
+  updateCharacterCount();
+  
+  // Register all event listeners
+  registerEventListeners();
+  
+  console.log('Generation Translator initialized successfully');
+}
+
+// -------------------------------------------
+// Entry Point
+// -------------------------------------------
+/**
+ * Entry point - Initialize app when DOM is ready
+ * Uses DOMContentLoaded to ensure all elements are available
+ */
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeApp);
+} else {
+  // DOM is already loaded
+  initializeApp();
+}
