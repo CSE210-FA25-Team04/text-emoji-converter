@@ -688,6 +688,30 @@ function scrollToTranslator() {
 // -------------------------------------------
 // Operations for Translation
 // -------------------------------------------
+
+/**
+ * Transforms text using the backend API
+ * @param {string} text - Text to transform
+ * @param {string} mode - Transform mode ('text-to-emoji' or 'emoji-to-text')
+ * @returns {Promise<string>} Transformed text
+ */
+async function transformText(text, mode) {
+  const response = await fetch("/api/transform", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ text, mode }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  const data = await response.json();
+  return data.result;
+}
+
 /**
  * Performs the transformation operation
  * Takes input text and transforms it between text and emoji formats

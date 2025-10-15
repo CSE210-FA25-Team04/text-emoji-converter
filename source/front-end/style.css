@@ -34,11 +34,13 @@ body {
   text-align: center;
   padding: 2rem 0;
 }
+
 .site-header h1 {
   font-size: clamp(1.5rem, 5vw, 2.5rem);
   color: var(--accent);
-  text-shadow: 0 0 10px rgba(212, 165, 116, 0.5);
+  text-shadow: 0 0 10px rgb(212 165 116 / 50%);
 }
+
 .tagline {
   color: #9a9a9a;
   font-style: italic;
@@ -68,10 +70,12 @@ body {
   flex: 1;
   min-width: 10rem;
 }
+
 .transform-selector label {
   font-size: 0.875rem;
   color: var(--accent);
 }
+
 .transform-selector select {
   padding: 0.5rem 1rem;
   background: var(--card);
@@ -104,7 +108,7 @@ body {
   align-items: center;
 }
 
-@media (min-width: 64rem) {
+@media (width >= 64rem) {
   .translation-cards {
     grid-template-columns: 1fr auto 1fr;
   }
@@ -126,6 +130,7 @@ body {
   justify-content: space-between;
   align-items: center;
 }
+
 .card-header h2 {
   font-size: 1.125rem;
   color: var(--accent);
@@ -162,6 +167,7 @@ body {
 .translation-output {
   overflow-y: auto;
 }
+
 .empty-state {
   color: #9a9a9a;
   font-style: italic;
@@ -182,6 +188,7 @@ body {
   border-top: 1px solid var(--border);
   text-align: right;
 }
+
 .char-count {
   font-size: 0.75rem;
   color: #9a9a9a;
@@ -217,7 +224,8 @@ button {
   justify-content: center;
   order: 2;
 }
-@media (min-width: 64rem) {
+
+@media (width >= 64rem) {
   .translate-button-container {
     order: 0;
   }
@@ -242,6 +250,7 @@ button {
   border-radius: 0.75rem;
   overflow: hidden;
 }
+
 .quick-examples summary {
   padding: 1rem;
   cursor: pointer;
@@ -255,6 +264,7 @@ button {
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   gap: 0.5rem;
 }
+
 .example-btn {
   padding: 0.5rem 1rem;
   background: var(--card);
@@ -279,6 +289,7 @@ button {
   border: 1px solid var(--border);
   border-radius: 0.75rem;
 }
+
 .examples-section h2 {
   font-size: 1.5rem;
   color: var(--accent);
@@ -289,6 +300,7 @@ button {
 .example-category {
   margin-bottom: 2rem;
 }
+
 .example-category h3 {
   font-size: 1.25rem;
   color: var(--accent);
@@ -304,7 +316,7 @@ button {
   border-radius: 0.5rem;
 }
 
-@media (min-width: 48rem) {
+@media (width >= 48rem) {
   .example-pair {
     grid-template-columns: 1fr 1fr;
   }
@@ -328,12 +340,14 @@ button {
   justify-content: center;
   padding: 1rem;
 }
+
 .emoji-picker-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgb(0 0 0 / 70%);
   backdrop-filter: blur(5px);
 }
+
 .emoji-picker-content {
   position: relative;
   background: var(--card);
@@ -355,6 +369,7 @@ button {
   justify-content: space-between;
   align-items: center;
 }
+
 .emoji-picker-header h3 {
   font-size: 1.125rem;
   color: var(--accent);
@@ -383,6 +398,7 @@ button {
   margin-bottom: 1rem;
   justify-content: center;
 }
+
 .category-btn {
   padding: 0.5rem;
   background: var(--bg);
@@ -397,6 +413,7 @@ button {
   grid-template-columns: repeat(auto-fill, minmax(2.5rem, 1fr));
   gap: 0.25rem;
 }
+
 .emoji-btn-item {
   padding: 0.5rem;
   background: var(--bg);
@@ -413,10 +430,12 @@ button {
   margin-top: 3rem;
   border-top: 1px solid #3a3a3a;
 }
+
 .site-footer p {
   font-size: 0.875rem;
   color: #9a9a9a;
 }
+
 .footer-sub {
   font-size: 0.75rem;
   margin-top: 0.25rem;
