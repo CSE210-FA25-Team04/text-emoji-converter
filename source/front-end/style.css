@@ -827,3 +827,35 @@ button {
   outline-offset: 2px;
 }
 
+/* ===== Equal-size IO boxes (append-only override) ===== */
+:root { --io-box-height: 12rem; } /* tweak to taste */
+
+.input-card .translation-input,
+.output-card .translation-output {
+  height: var(--io-box-height) !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input-card .translation-input { resize: none !important; }   /* keep heights equal */
+.output-card .translation-output { overflow: auto !important; } /* scroll long output */
+
+/* === Force Evidence Input & Decoded Message to identical size === */
+:root { --io-box-height: 12rem; } /* tweak to taste */
+
+.input-card .translation-input,
+.output-card .translation-output {
+  height: var(--io-box-height) !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  width: 100%;
+  box-sizing: border-box;
+  display: block;
+  overflow: auto;                 /* same overflow on both */
+  scrollbar-gutter: stable both-edges; /* reserve identical gutter */
+}
+
+/* keep heights locked; scroll instead of resize for the textarea */
+.input-card .translation-input { resize: none !important; }
