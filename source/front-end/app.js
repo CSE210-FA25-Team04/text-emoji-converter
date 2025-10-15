@@ -4,7 +4,12 @@
  *
  */
 
-"use strict";
+'use strict';
+import { translateText } from "./translateText.js";
+// Prevent ReferenceError when running outside browser (e.g., Node.js)
+if (typeof document === "undefined") global.document = {};
+
+
 
 // -------------------------------------------
 // Different Configuration and Data
@@ -513,90 +518,87 @@ const elements = {
  * - If no API key → uses local lookup map (for offline demos or dev environments).
  */
 
-async function translateText(text, fromGen, toGen) {
-  if (!text || !text.trim() || fromGen === toGen) return text.trim();
+// async function translateText(text, fromGen, toGen) {
+//   if (!text || !text.trim() || fromGen === toGen) return text.trim();
 
-  fromGen = fromGen.toLowerCase();
-  toGen = toGen.toLowerCase();
+//   fromGen = fromGen.toLowerCase();
+//   toGen = toGen.toLowerCase();
 
-  // const genStyles = {
-  //   genz: "Gen Z slang — compact, emoji-heavy, humor-driven, internet-native tone ",
-  //   millennial: "Millennial tone — conversational, pop-culture infused, uses mild humor or memes, occasional emojis.",
-  //   boomer: "Boomer tone — formal, respectful, structured sentences, avoids slang or abbreviations."
-  // };
+//   // const genStyles = {
+//   //   genz: "Gen Z slang — compact, emoji-heavy, humor-driven, internet-native tone ",
+//   //   millennial: "Millennial tone — conversational, pop-culture infused, uses mild humor or memes, occasional emojis.",
+//   //   boomer: "Boomer tone — formal, respectful, structured sentences, avoids slang or abbreviations."
+//   // };
 
-  try {
-    if (
-      typeof process !== "undefined" &&
-      process.env &&
-      process.env.GROQ_API_KEY
-    ) {
-      const Groq = require("groq-sdk");
-      const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+//   try {
+//     if (typeof process !== "undefined" && process.env && process.env.GROQ_API_KEY) {
+//       const Groq = require("groq-sdk");
+//       const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-      const SYSTEM_PROMPT = (fromGen, toGen) => `
-You are a generational translator that rewrites text from the ${fromGen.toUpperCase()} communication style 
-into the ${toGen.toUpperCase()} communication style, preserving meaning and emotion.
+//       const SYSTEM_PROMPT = (fromGen, toGen) => `
+// You are a generational translator that rewrites text from the ${fromGen.toUpperCase()} communication style 
+// into the ${toGen.toUpperCase()} communication style, preserving meaning and emotion.
 
-### Style References
-- **Boomer:** Formal, polite, full sentences, avoids slang or emojis.
-- **Millennial:** Conversational, balanced, friendly, may use light humor or emojis (😊, 😂, 👍).
-- **Gen Z:** Short, emoji-heavy, internet slang (🔥💀😭😂❤️‍🔥, fr, bet, no cap, lowkey, ong).
+// ### Style References
+// - **Boomer:** Formal, polite, full sentences, avoids slang or emojis.
+// - **Millennial:** Conversational, balanced, friendly, may use light humor or emojis (😊, 😂, 👍).
+// - **Gen Z:** Short, emoji-heavy, internet slang (🔥💀😭😂❤️‍🔥, fr, bet, no cap, lowkey, ong).
 
-### Translation Rules
-1. Translate naturally from ${fromGen} → ${toGen}.
-2. Keep the tone authentic to the target generation — not exaggerated or parody.
-3. Never explain or add meta-comments.
-4. Maintain the same meaning and emotional tone.
+// ### Translation Rules
+// 1. Translate naturally from ${fromGen} → ${toGen}.
+// 2. Keep the tone authentic to the target generation — not exaggerated or parody.
+// 3. Never explain or add meta-comments.
+// 4. Maintain the same meaning and emotional tone.
 
-### Examples
-Boomer → Gen Z:
-- “Hello, how are you doing today?” → “yo wyd 💀😂”
-- “Congratulations on your new job!” → “let’s gooo congrats 🔥👏”
+// ### Examples
+// Boomer → Gen Z:
+// - “Hello, how are you doing today?” → “yo wyd 💀😂”
+// - “Congratulations on your new job!” → “let’s gooo congrats 🔥👏”
 
-Gen Z → Boomer:
-- “ngl that was mid fr 💀” → “Honestly, that was quite average.”
+// Gen Z → Boomer:
+// - “ngl that was mid fr 💀” → “Honestly, that was quite average.”
 
-Millennial → Gen Z:
-- “Let’s hang out after class.” → “link up fr 🔥💀”
+// Millennial → Gen Z:
+// - “Let’s hang out after class.” → “link up fr 🔥💀”
 
-Gen Z → Millennial:
-- “bro that was lit 🔥😭” → “That was actually awesome 😂”
-`;
+// Gen Z → Millennial:
+// - “bro that was lit 🔥😭” → “That was actually awesome 😂”
+// `;
 
-      const completion = await groq.chat.completions.create({
-        model: "llama-3.1-8b-instant",
-        messages: [
-          { role: "system", content: SYSTEM_PROMPT(fromGen, toGen) }, // ✅ fix
-          { role: "user", content: text },
-        ],
-        temperature: 0.8,
-        max_tokens: 150,
-      });
+//       const completion = await groq.chat.completions.create({
+//         model: "llama-3.1-8b-instant",
+//         messages: [
+//           { role: "system", content: SYSTEM_PROMPT(fromGen, toGen) }, // ✅ fix
+//           { role: "user", content: text }
+//         ],
+//         temperature: 0.8,
+//         max_tokens: 150
+//       });
 
-      const reply = completion?.choices?.[0]?.message?.content?.trim();
-      console.log("LLM Reply:", reply);
-      if (reply) return reply;
-    }
-  } catch (err) {
-    console.error("Groq translation failed, falling back:", err.message || err);
-  }
+//       const reply = completion?.choices?.[0]?.message?.content?.trim();
+//       console.log("LLM Reply:", reply);
+//       if (reply) return reply;
+//     }
+//   } catch (err) {
+//     console.error("Groq translation failed, falling back:", err.message || err);
+//   }
 
-  const translationMap = translations[fromGen]?.[toGen];
-  if (!translationMap) return text;
+//   const translationMap = translations[fromGen]?.[toGen];
+//   if (!translationMap) return text;
 
-  let result = text;
-  if (translationMap.patterns) {
-    translationMap.patterns.forEach((pattern) => {
-      result = result.replace(pattern.from, pattern.to);
-    });
-  }
-  if (translationMap.suffix && !result.trim().endsWith(translationMap.suffix)) {
-    result = `${result.trim()}${translationMap.suffix}`;
-  }
+//   let result = text;
+//   if (translationMap.patterns) {
+//     translationMap.patterns.forEach(pattern => {
+//       result = result.replace(pattern.from, pattern.to);
+//     });
+//   }
+//   if (translationMap.suffix && !result.trim().endsWith(translationMap.suffix)) {
+//     result = `${result.trim()}${translationMap.suffix}`;
+//   }
 
-  return result.trim();
-}
+//   return result.trim();
+// }
+
 
 // -------------------------------------------
 // Utility Functions
