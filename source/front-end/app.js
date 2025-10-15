@@ -211,41 +211,108 @@ const elements = {
 /**
  * Translates text from one generation's communication style to another
  * 
- * @param {string} text - The input text to translate
- * @param {string} fromGen - Source generation ('millennial', 'genz', or 'boomer')
- * @param {string} toGen - Target generation ('millennial', 'genz', or 'boomer')
- * @returns {string} The translated text
+ *
+ * Translates text between generational language styles (Millennial, Gen Z, Boomer).
+ *
+ * This function supports both **server** (Groq API) and **browser/local** (fallback) modes.
+ *
+ * @param {string} text - The input text to translate.
+ * @param {'millennial'|'genz'|'boomer'} fromGen - Source generation style.
+ * @param {'millennial'|'genz'|'boomer'} toGen - Target generation style.
+ * @returns {Promise<string>} - The translated text.
+ *
+ * SECURITY NOTE:
+ * - The Groq API call uses `process.env.GROQ_API_KEY`, which must be set server-side only.
+ * - NEVER embed API keys in front-end code or client bundles.
+ * - For production: implement a secure server route (e.g., POST /api/translate)
+ *   that calls Groq privately and returns translation to the browser.
+ *
+ * BEHAVIOR:
+ * - If API key is available → uses Groq model for natural generational translation.
+ * - If no API key → uses local lookup map (for offline demos or dev environments).
  */
-function translateText(text, fromGen, toGen) {
-  // A demo version using Helena's implementation from lookup table..
-  // need to be replaced
-  // Return original text if empty or translating to same generation
-  if (!text.trim() || fromGen === toGen) {
-    return text;
+
+async function translateText(text, fromGen, toGen) {
+  if (!text || !text.trim() || fromGen === toGen) return text.trim();
+
+  fromGen = fromGen.toLowerCase();
+  toGen = toGen.toLowerCase();
+
+  // const genStyles = {
+  //   genz: "Gen Z slang — compact, emoji-heavy, humor-driven, internet-native tone ",
+  //   millennial: "Millennial tone — conversational, pop-culture infused, uses mild humor or memes, occasional emojis.",
+  //   boomer: "Boomer tone — formal, respectful, structured sentences, avoids slang or abbreviations."
+  // };
+
+  try {
+    if (typeof process !== "undefined" && process.env && process.env.GROQ_API_KEY) {
+      const Groq = require("groq-sdk");
+      const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+
+      const SYSTEM_PROMPT = (fromGen, toGen) => `
+You are a generational translator that rewrites text from the ${fromGen.toUpperCase()} communication style 
+into the ${toGen.toUpperCase()} communication style, preserving meaning and emotion.
+
+### Style References
+- **Boomer:** Formal, polite, full sentences, avoids slang or emojis.
+- **Millennial:** Conversational, balanced, friendly, may use light humor or emojis (😊, 😂, 👍).
+- **Gen Z:** Short, emoji-heavy, internet slang (🔥💀😭😂❤️‍🔥, fr, bet, no cap, lowkey, ong).
+
+### Translation Rules
+1. Translate naturally from ${fromGen} → ${toGen}.
+2. Keep the tone authentic to the target generation — not exaggerated or parody.
+3. Never explain or add meta-comments.
+4. Maintain the same meaning and emotional tone.
+
+### Examples
+Boomer → Gen Z:
+- “Hello, how are you doing today?” → “yo wyd 💀😂”
+- “Congratulations on your new job!” → “let’s gooo congrats 🔥👏”
+
+Gen Z → Boomer:
+- “ngl that was mid fr 💀” → “Honestly, that was quite average.”
+
+Millennial → Gen Z:
+- “Let’s hang out after class.” → “link up fr 🔥💀”
+
+Gen Z → Millennial:
+- “bro that was lit 🔥😭” → “That was actually awesome 😂”
+`;
+
+      const completion = await groq.chat.completions.create({
+        model: "llama-3.1-8b-instant",
+        messages: [
+          { role: "system", content: SYSTEM_PROMPT(fromGen, toGen) }, // ✅ fix
+          { role: "user", content: text }
+        ],
+        temperature: 0.8,
+        max_tokens: 150
+      });
+
+      const reply = completion?.choices?.[0]?.message?.content?.trim();
+      console.log("LLM Reply:", reply);
+      if (reply) return reply;
+    }
+  } catch (err) {
+    console.error("Groq translation failed, falling back:", err.message || err);
   }
 
-  // Get translation map for this generation pair
-  const translationMap = translations[fromGen] && translations[fromGen][toGen];
-  if (!translationMap) {
-    return text;
-  }
+  const translationMap = translations[fromGen]?.[toGen];
+  if (!translationMap) return text;
 
   let result = text;
-  
-  // Apply all pattern-based replacements sequentially
   if (translationMap.patterns) {
-    translationMap.patterns.forEach(function(pattern) {
+    translationMap.patterns.forEach(pattern => {
       result = result.replace(pattern.from, pattern.to);
     });
   }
-
-  // Add generation-specific suffix if defined and not already present
-  if (translationMap.suffix && result.trim() && !result.endsWith(translationMap.suffix)) {
-    result = result.trim() + translationMap.suffix;
+  if (translationMap.suffix && !result.trim().endsWith(translationMap.suffix)) {
+    result = `${result.trim()}${translationMap.suffix}`;
   }
 
-  return result;
+  return result.trim();
 }
+
 
 // -------------------------------------------
 // Utility Functions
@@ -338,7 +405,7 @@ function scrollToTranslator() {
  * Takes input text and translates it from source to target generation
  * Updates the output display with results
  */
-function performTranslation() {
+async function performTranslation() {
   const text = elements.inputText.value;
   const fromGen = elements.fromGenSelect.value;
   const toGen = elements.toGenSelect.value;
@@ -352,14 +419,17 @@ function performTranslation() {
     return;
   }
 
-  // Perform translation
-  const translated = translateText(text, fromGen, toGen);
-  elements.outputText.textContent = translated;
-  elements.outputCount.textContent = translated.length;
-  elements.copyBtn.disabled = false;
-  
-  // Provide user feedback
-  showToast('Message decoded! 🔍');
+  // Perform translation (translateText may be async when using server-side Groq)
+  try {
+    const translated = await translateText(text, fromGen, toGen);
+    elements.outputText.textContent = translated;
+    elements.outputCount.textContent = translated.length;
+    elements.copyBtn.disabled = false;
+    showToast('Message decoded! 🔍');
+  } catch (err) {
+    console.error('Translation failed:', err);
+    showToast('Translation failed', true);
+  }
 }
 
 /**
