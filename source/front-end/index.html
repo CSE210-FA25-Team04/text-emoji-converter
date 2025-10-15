@@ -3,48 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generation Translator - Case File</title>
-    <meta name="description" content="Detective-themed generational language translator bridging Millennial, Gen Z, and Boomer communication styles">
+    <title>Emoji Transformer - Case File</title>
+    <meta name="description" content="Detective-themed emoji transformation tool for converting text to emojis and vice versa">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <main class="container">
         <header class="site-header">
-            <div class="header-content">
-                <h1>The Case of the Family Generation Gap</h1>
-                <span class="detective-icon" aria-hidden="true">🔍</span>
-            </div>
-            <p class="tagline">Helping families crack the code between Millennial, Gen Z, and Boomer communication styles</p>
+            <h1>The Case of the Emoji Cipher</h1>
+            <span class="detective-icon" aria-hidden="true">🔍</span>
+            <p class="tagline">Cracking the code between text and emojis for clearer communication</p>
         </header>
 
         <!-- Translator Section -->
-        <section class="translator-section" aria-label="Language Translator">
+        <section class="translator-section" aria-label="Emoji Transformer">
             <div class="translator-controls">
-                <div class="generation-selector">
-                    <label for="from-generation">Decode From:</label>
-                    <select id="from-generation" name="from-generation">
-                        <option value="millennial">Millennial</option>
-                        <option value="genz">Gen Z</option>
-                        <option value="boomer">Boomer</option>
+                <div class="transform-selector">
+                    <label for="transform-mode">Transform Mode:</label>
+                    <select id="transform-mode" name="transform-mode">
+                        <option value="text-to-emoji">Text → Emoji</option>
+                        <option value="emoji-to-text">Emoji → Text</option>
                     </select>
                 </div>
 
                 <button 
                     type="button" 
                     class="swap-button" 
-                    aria-label="Swap generations"
-                    title="Swap generations">
+                    aria-label="Swap transformation mode"
+                    title="Swap transformation mode">
                     ⇄
                 </button>
-
-                <div class="generation-selector">
-                    <label for="to-generation">Translate To:</label>
-                    <select id="to-generation" name="to-generation">
-                        <option value="millennial">Millennial</option>
-                        <option value="genz" selected>Gen Z</option>
-                        <option value="boomer">Boomer</option>
-                    </select>
-                </div>
             </div>
 
             <div class="translation-cards">
@@ -52,15 +40,15 @@
                 <article class="card input-card">
                     <header class="card-header">
                         <h2>Evidence Input</h2>
-                        <span class="generation-badge" id="input-badge">Millennial</span>
+                        <span class="transform-badge" id="input-badge">Text</span>
                     </header>
                     <div class="card-body">
                         <textarea 
                             id="input-text"
                             class="translation-input"
-                            placeholder="Enter your message to decode..."
+                            placeholder="Enter your text to transform..."
                             rows="6"
-                            aria-label="Input text to translate"></textarea>
+                            aria-label="Input text to transform"></textarea>
                         <div class="card-actions">
                             <button type="button" class="btn-secondary emoji-btn" data-target="input">
                                 <span>Add Emoji</span>
@@ -75,7 +63,6 @@
                     </footer>
                 </article>
 
-                <!-- Translate Button -->
                 <div class="translate-button-container">
                     <button type="button" class="translate-btn" id="translate-btn">
                         <span class="btn-icon-arrow" aria-hidden="true">→</span>
@@ -86,7 +73,7 @@
                 <article class="card output-card">
                     <header class="card-header">
                         <h2>Decoded Message</h2>
-                        <span class="generation-badge" id="output-badge">Gen Z</span>
+                        <span class="transform-badge" id="output-badge">Emoji</span>
                     </header>
                     <div class="card-body">
                         <div 
@@ -95,7 +82,7 @@
                             role="region"
                             aria-live="polite"
                             aria-label="Translated output">
-                            <p class="empty-state">Your decoded message will appear here...</p>
+                            <p class="empty-state">Your transformed message will appear here...</p>
                         </div>
                         <div class="card-actions">
                             <button type="button" class="btn-primary copy-btn" disabled>
@@ -113,17 +100,17 @@
             <details class="quick-examples">
                 <summary>Quick Case Files (Click to expand)</summary>
                 <div class="examples-grid">
-                    <button type="button" class="example-btn" data-text="I'm literally dying! This is so extra! 😂💀" data-from="millennial">
-                        "I'm literally dying! This is so extra! 😂💀"
+                    <button type="button" class="example-btn" data-text="I love pizza and coffee" data-mode="text-to-emoji">
+                        "I love pizza and coffee"
                     </button>
-                    <button type="button" class="example-btn" data-text="no cap this slaps fr fr 💯🔥" data-from="genz">
-                        "no cap this slaps fr fr 💯🔥"
+                    <button type="button" class="example-btn" data-text="🎉🎂🎈" data-mode="emoji-to-text">
+                        "🎉🎂🎈"
                     </button>
-                    <button type="button" class="example-btn" data-text="That's the bee's knees! Groovy! ☎️📻" data-from="boomer">
-                        "That's the bee's knees! Groovy! ☎️📻"
+                    <button type="button" class="example-btn" data-text="Good morning sunshine" data-mode="text-to-emoji">
+                        "Good morning sunshine"
                     </button>
-                    <button type="button" class="example-btn" data-text="Can we circle back on this? Synergy! 💼" data-from="millennial">
-                        "Can we circle back on this? Synergy! 💼"
+                    <button type="button" class="example-btn" data-text="🌧️☔🌈" data-mode="emoji-to-text">
+                        "🌧️☔🌈"
                     </button>
                 </div>
             </details>
@@ -137,47 +124,47 @@
         </div>
 
         <!-- Examples Section -->
-        <section class="examples-section hidden" id="examples-section" aria-label="Translation Examples">
+        <section class="examples-section hidden" id="examples-section" aria-label="Transformation Examples">
             <h2>Case File Archives</h2>
             
             <article class="example-category">
-                <h3>🔍 From Millennial to Gen Z</h3>
+                <h3>🔍 Text to Emoji</h3>
                 <div class="example-pair">
                     <div class="example-original">
                         <strong>Original:</strong>
-                        <p>"I'm literally dying! This is so extra! 😂💀"</p>
+                        <p>"I love pizza and coffee"</p>
                     </div>
                     <div class="example-translation">
                         <strong>Decoded:</strong>
-                        <p>"I'm dead fr! This is too much! 💀😭"</p>
+                        <p>"I ❤️ 🍕 and ☕"</p>
                     </div>
                 </div>
             </article>
 
             <article class="example-category">
-                <h3>🔍 From Gen Z to Boomer</h3>
+                <h3>🔍 Emoji to Text</h3>
                 <div class="example-pair">
                     <div class="example-original">
                         <strong>Original:</strong>
-                        <p>"no cap this slaps fr fr 💯🔥"</p>
+                        <p>"🎉🎂🎈"</p>
                     </div>
                     <div class="example-translation">
                         <strong>Decoded:</strong>
-                        <p>"Honestly, this is excellent! Really great! 👍⭐"</p>
+                        <p>"party cake balloons"</p>
                     </div>
                 </div>
             </article>
 
             <article class="example-category">
-                <h3>🔍 From Boomer to Millennial</h3>
+                <h3>🔍 Weather Emojis</h3>
                 <div class="example-pair">
                     <div class="example-original">
                         <strong>Original:</strong>
-                        <p>"That's the bee's knees! Groovy! ☎️📻"</p>
+                        <p>"🌧️☔🌈"</p>
                     </div>
                     <div class="example-translation">
                         <strong>Decoded:</strong>
-                        <p>"That's amazing! So cool! 📱💻"</p>
+                        <p>"rain umbrella rainbow"</p>
                     </div>
                 </div>
             </article>

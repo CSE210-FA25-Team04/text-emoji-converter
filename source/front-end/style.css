@@ -173,7 +173,7 @@ body {
   flex-wrap: wrap;
 }
 
-.generation-selector {
+.transform-selector {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xs);
@@ -181,13 +181,13 @@ body {
   min-width: 10rem;
 }
 
-.generation-selector label {
+.transform-selector label {
   font-size: var(--font-sm);
   color: var(--color-amber);
   letter-spacing: 0.05em;
 }
 
-.generation-selector select {
+.transform-selector select {
   padding: var(--spacing-sm) var(--spacing-md);
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
@@ -199,11 +199,11 @@ body {
   transition: all var(--transition-base);
 }
 
-.generation-selector select:hover {
+.transform-selector select:hover {
   border-color: var(--color-amber);
 }
 
-.generation-selector select:focus {
+.transform-selector select:focus {
   outline: 2px solid var(--color-amber);
   outline-offset: 2px;
 }
@@ -290,7 +290,7 @@ body {
   color: var(--color-amber-light);
 }
 
-.generation-badge {
+.transform-badge {
   padding: var(--spacing-xs) var(--spacing-sm);
   background: var(--color-amber-dark);
   color: var(--color-noir-black);
