@@ -490,6 +490,21 @@ const elements = (typeof document !== 'undefined')
 // -------------------------------------------
 // Core Translation Feature
 // -------------------------------------------
+/**
+ * Minimal local translations fallback used when an API key is not present.
+ * Keeps the mapping small and deterministic for unit tests.
+ */
+const translations = {
+  millennial: {
+    genz: {
+      patterns: [
+        { from: /amazing/gi, to: 'bussin' },
+        { from: /😂/g, to: '💀' }
+      ],
+      suffix: ' fr fr'
+    }
+  }
+};
 
 // Comment - Must be replaced by backend team!
 /**
@@ -617,7 +632,7 @@ function getTransformModeLabel(value) {
 // Export functions for unit testing and external usage.
 // When this file is included in a browser via <script>, these exports
 // are harmless because they only exist in module contexts.
-export { translateText, getGenerationLabel };
+export { translateText, getTransformModeLabel };
 
 /**
  * Updates the transform mode badge labels in the UI
