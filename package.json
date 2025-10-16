@@ -20,7 +20,8 @@
     "lint:prettier": "prettier --check .",
     "lint:js": "eslint .",
     "lint:css": "stylelint '**/*.{css,scss}'",
-    "lint": "npm run lint:prettier && npm run lint:js && npm run lint:css"
+    "lint": "npm run lint:prettier && npm run lint:js && npm run lint:css",
+    "test": "node --test"
   },
   "license": "MIT"
 }
