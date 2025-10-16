@@ -451,6 +451,7 @@ const elements =
         // Generation selectors
         fromGenSelect: document.getElementById("from-generation"),
         toGenSelect: document.getElementById("to-generation"),
+        transformModeSelect: document.getElementById("transform-mode"),
         swapButton: document.querySelector(".swap-button"),
 
         // Main interaction elements
