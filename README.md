@@ -52,7 +52,7 @@ This repository hosts the **Text-to-Emoji Conversion Project**. Our team, **The 
 
 ## Code Style and Formatting
 
-The repository enforces strict code style and format checks. Pull requests can only be merged once all checks pass.
+The repository on the main branch enforces strict code style and format checks. Pull requests can only be merged once all checks pass.
 
 Run checks locally:
 
@@ -72,6 +72,15 @@ The checks performed:
 3. CSS/SCSS Linting: `stylelint '**/*.{css,scss}'`
 
 Note: Some issues may require manual fixes. Using VSCode extensions for ESLint and Prettier is highly recommended.
+
+---
+
+## Unit Tests
+
+We have a Node.js built-in test runner. The specific testcases we have are
+
+- test/translate.test.js - Tests for translation functionality
+- test/utils.test.js - Tests for utility functions
 
 ---
 
