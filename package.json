@@ -4,7 +4,11 @@
   "description": "A package.json",
   "type": "module",
   "dependencies": {
-    "@primer/css": "17.0.1"
+    "@primer/css": "17.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^4.21.2",
+    "groq-sdk": "^0.33.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.1.0",
@@ -16,10 +20,13 @@
     "stylelint-scss": "^6.12.1"
   },
   "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
     "lint:prettier": "prettier --check .",
     "lint:js": "eslint .",
     "lint:css": "stylelint '**/*.{css,scss}'",
-    "lint": "npm run lint:prettier && npm run lint:js && npm run lint:css"
+    "lint": "npm run lint:prettier && npm run lint:js && npm run lint:css",
+    "test": "node --test"
   },
   "license": "MIT"
 }

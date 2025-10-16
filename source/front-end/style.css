@@ -1,0 +1,460 @@
+/* CSS Custom Properties */
+:root {
+  --bg: #1a1a1a;
+  --card: #2a2a2a;
+  --text: #d4d4d4;
+  --accent: #d4a574;
+  --border: #6a6a6a;
+}
+
+/* Global reset and box-sizing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Main body & container */
+body {
+  font-family: "Courier New", monospace;
+  background: linear-gradient(135deg, #0a0a0a, #1a1a1a, #2a2a2a);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 75rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Site header styling */
+.site-header {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.site-header h1 {
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  color: var(--accent);
+  text-shadow: 0 0 10px rgb(212 165 116 / 50%);
+}
+
+.tagline {
+  color: #9a9a9a;
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+/* Main translator section container */
+.translator-section {
+  max-width: 60rem;
+  margin: 0 auto;
+}
+
+.translator-controls {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+/* Transform selector dropdown styling */
+.transform-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+  min-width: 10rem;
+}
+
+.transform-selector label {
+  font-size: 0.875rem;
+  color: var(--accent);
+}
+
+.transform-selector select {
+  padding: 0.5rem 1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  color: var(--text);
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* Swap button for switching input/output */
+.swap-button {
+  padding: 0.5rem 1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  color: var(--accent);
+  font-size: 1.25rem;
+  cursor: pointer;
+  min-width: 3rem;
+  height: 2.75rem;
+}
+
+/* Responsive design */
+.translation-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  align-items: center;
+}
+
+@media (width >= 64rem) {
+  .translation-cards {
+    grid-template-columns: 1fr auto 1fr;
+  }
+}
+
+/* Card styling */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 1rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-header h2 {
+  font-size: 1.125rem;
+  color: var(--accent);
+}
+
+.transform-badge {
+  padding: 0.25rem 0.5rem;
+  background: #b8935f;
+  color: #0a0a0a;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+/* Text input and output */
+.translation-input,
+.translation-output {
+  width: 100%;
+  padding: 1rem;
+  background: var(--bg);
+  border: 1px solid #3a3a3a;
+  border-radius: 0.5rem;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1rem;
+  min-height: 10rem;
+  resize: none;
+}
+
+.translation-output {
+  overflow-y: auto;
+}
+
+.empty-state {
+  color: #9a9a9a;
+  font-style: italic;
+}
+
+/* Card action buttons */
+.card-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Card footer & char count */
+.card-footer {
+  padding: 0.5rem 1rem;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  text-align: right;
+}
+
+.char-count {
+  font-size: 0.75rem;
+  color: #9a9a9a;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  padding: 0.5rem 1rem;
+  background: var(--accent);
+  color: #0a0a0a;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.btn-secondary {
+  padding: 0.5rem 1rem;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+}
+
+/* Main translate button container */
+.translate-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  order: 2;
+}
+
+@media (width >= 64rem) {
+  .translate-button-container {
+    order: 0;
+  }
+}
+
+/* Main translate button with gradient background */
+.translate-btn {
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #b8935f, var(--accent), #c9a961);
+  color: #0a0a0a;
+  border: 2px solid #e6c9a8;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Quick examples showcased */
+.quick-examples {
+  margin-top: 1.5rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.quick-examples summary {
+  padding: 1rem;
+  cursor: pointer;
+  color: var(--accent);
+  list-style: none;
+}
+
+.examples-grid {
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 0.5rem;
+}
+
+.example-btn {
+  padding: 0.5rem 1rem;
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  text-align: left;
+  font-size: 0.875rem;
+}
+
+.examples-toggle {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+/* Full examples displayed */
+.examples-section {
+  max-width: 60rem;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+}
+
+.examples-section h2 {
+  font-size: 1.5rem;
+  color: var(--accent);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.example-category {
+  margin-bottom: 2rem;
+}
+
+.example-category h3 {
+  font-size: 1.25rem;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.example-pair {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  background: var(--card);
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+@media (width >= 48rem) {
+  .example-pair {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.example-original strong,
+.example-translation strong {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--accent);
+  font-size: 0.875rem;
+}
+
+/* Emoji picker modal overlay */
+.emoji-picker {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.emoji-picker-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgb(0 0 0 / 70%);
+  backdrop-filter: blur(5px);
+}
+
+.emoji-picker-content {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  max-width: 30rem;
+  width: 100%;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Emoji picker header */
+.emoji-picker-header {
+  padding: 1rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.emoji-picker-header h3 {
+  font-size: 1.125rem;
+  color: var(--accent);
+}
+
+/* Close button for emoji picker */
+.close-btn {
+  padding: 0.25rem 0.5rem;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  font-size: 1.125rem;
+}
+
+/* Emoji picker scrollable body */
+.emoji-picker-body {
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+/* Emoji category navigation buttons */
+.emoji-categories {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+  justify-content: center;
+}
+
+.category-btn {
+  padding: 0.5rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  font-size: 1.25rem;
+}
+
+/* Emojis Layout */
+.emoji-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(2.5rem, 1fr));
+  gap: 0.25rem;
+}
+
+.emoji-btn-item {
+  padding: 0.5rem;
+  background: var(--bg);
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+/* Footer */
+.site-footer {
+  text-align: center;
+  padding: 2rem 0;
+  margin-top: 3rem;
+  border-top: 1px solid #3a3a3a;
+}
+
+.site-footer p {
+  font-size: 0.875rem;
+  color: #9a9a9a;
+}
+
+.footer-sub {
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  font-style: italic;
+}
+
+/* Notification */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--accent);
+  color: #0a0a0a;
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  z-index: 2000;
+}
+
+/* Utility class for hiding elements */
+.hidden {
+  display: none !important;
+}
