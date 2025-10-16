@@ -38,12 +38,12 @@ app.post("/api/transform", async (req, res) => {
 
     let systemPrompt;
     if (mode === "text-to-emoji") {
-      systemPrompt = `Convert the following text to emojis. Replace words with appropriate emojis where possible. Keep the structure readable. Examples:
+      systemPrompt = `Convert the following text to emojis. Replace words with appropriate emojis where possible. Keep the structure readable. Always return only the converted text, never explanations. Examples:
       - "I love pizza" → "I ❤️ 🍕"
       - "Good morning sunshine" → "Good 🌅 ☀️"
       - "Happy birthday" → "😊 🎂"`;
     } else {
-      systemPrompt = `Convert emojis to descriptive text. Replace emojis with their meaning in simple words. Examples:
+      systemPrompt = `Convert emojis to descriptive text. Replace emojis with their meaning in simple words. Always return only the converted text, never explanations. Examples:
       - "I ❤️ 🍕" → "I love pizza"
       - "😊 🎂" → "happy birthday"
       - "🌧️☔" → "rain umbrella" `;
@@ -52,7 +52,7 @@ app.post("/api/transform", async (req, res) => {
     const completion = await groq.chat.completions.create({
       messages: [
         { role: "system", content: systemPrompt },
-        { role: "user", content: text },
+        { role: "user", content: `Please convert the following text: ${text}` },
       ],
       model: "llama-3.1-8b-instant",
       temperature: 0.3,
