@@ -445,47 +445,48 @@ const state = {
  * Cache all DOM elements on initialization to avoid repeated queries
  * @const {Object}
  */
-const elements = (typeof document !== 'undefined')
-  ? {
-      // Generation selectors
-      fromGenSelect: document.getElementById('from-generation'),
-      toGenSelect: document.getElementById('to-generation'),
-      swapButton: document.querySelector('.swap-button'),
+const elements =
+  typeof document !== "undefined"
+    ? {
+        // Generation selectors
+        fromGenSelect: document.getElementById("from-generation"),
+        toGenSelect: document.getElementById("to-generation"),
+        swapButton: document.querySelector(".swap-button"),
 
-      // Main interaction elements
-      translateBtn: document.getElementById('translate-btn'),
-      inputText: document.getElementById('input-text'),
-      outputText: document.getElementById('output-text'),
+        // Main interaction elements
+        translateBtn: document.getElementById("translate-btn"),
+        inputText: document.getElementById("input-text"),
+        outputText: document.getElementById("output-text"),
 
-      // Badges
-      inputBadge: document.getElementById('input-badge'),
-      outputBadge: document.getElementById('output-badge'),
+        // Badges
+        inputBadge: document.getElementById("input-badge"),
+        outputBadge: document.getElementById("output-badge"),
 
-      // Character counters
-      inputCount: document.getElementById('input-count'),
-      outputCount: document.getElementById('output-count'),
+        // Character counters
+        inputCount: document.getElementById("input-count"),
+        outputCount: document.getElementById("output-count"),
 
-      // Action buttons
-      copyBtn: document.querySelector('.copy-btn'),
-      clearBtn: document.querySelector('.clear-btn'),
-      emojiBtn: document.querySelector('.emoji-btn'),
+        // Action buttons
+        copyBtn: document.querySelector(".copy-btn"),
+        clearBtn: document.querySelector(".clear-btn"),
+        emojiBtn: document.querySelector(".emoji-btn"),
 
-      // Example functionality
-      exampleBtns: document.querySelectorAll('.example-btn'),
-      toggleExamplesBtn: document.getElementById('toggle-examples'),
-      examplesSection: document.getElementById('examples-section'),
+        // Example functionality
+        exampleBtns: document.querySelectorAll(".example-btn"),
+        toggleExamplesBtn: document.getElementById("toggle-examples"),
+        examplesSection: document.getElementById("examples-section"),
 
-      // Emoji picker elements
-      emojiPicker: document.getElementById('emoji-picker'),
-      emojiGrid: document.getElementById('emoji-grid'),
-      categoryBtns: document.querySelectorAll('.category-btn'),
-      closeEmojiPickerBtn: document.querySelector('.close-btn'),
-      emojiPickerBackdrop: document.querySelector('.emoji-picker-backdrop'),
+        // Emoji picker elements
+        emojiPicker: document.getElementById("emoji-picker"),
+        emojiGrid: document.getElementById("emoji-grid"),
+        categoryBtns: document.querySelectorAll(".category-btn"),
+        closeEmojiPickerBtn: document.querySelector(".close-btn"),
+        emojiPickerBackdrop: document.querySelector(".emoji-picker-backdrop"),
 
-      // Toast notification
-      toast: document.getElementById('toast')
-    }
-  : {};
+        // Toast notification
+        toast: document.getElementById("toast"),
+      }
+    : {};
 
 // -------------------------------------------
 // Core Translation Feature
@@ -498,12 +499,12 @@ const translations = {
   millennial: {
     genz: {
       patterns: [
-        { from: /amazing/gi, to: 'bussin' },
-        { from: /😂/g, to: '💀' }
+        { from: /amazing/gi, to: "bussin" },
+        { from: /😂/g, to: "💀" },
       ],
-      suffix: ' fr fr'
-    }
-  }
+      suffix: " fr fr",
+    },
+  },
 };
 
 // Comment - Must be replaced by backend team!
@@ -1177,9 +1178,9 @@ function initializeApp() {
  * Entry point - Initialize app when DOM is ready
  * Uses DOMContentLoaded to ensure all elements are available
  */
-if (typeof document !== 'undefined') {
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeApp);
+if (typeof document !== "undefined") {
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeApp);
   } else {
     // DOM is already loaded
     initializeApp();
