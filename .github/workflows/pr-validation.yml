@@ -5,9 +5,10 @@ on:
       - opened
       - synchronize
       - reopened
+    branches: ["**"]
   merge_group:
   push:
-    branches: [main]
+    branches: ["**"]
   workflow_dispatch:
 
 jobs:

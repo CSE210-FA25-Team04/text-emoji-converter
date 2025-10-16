@@ -1,197 +1,278 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Generation Translator - Case File</title>
-    <meta name="description" content="Detective-themed generational language translator bridging Millennial, Gen Z, and Boomer communication styles" />
-    <link rel="stylesheet" href="test.css" />
-</head>
-<body>
+    <title>Emoji Transformer</title>
+    <meta
+      name="description"
+      content="Detective-themed text to emojis and vice versa"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <main class="container">
-        <header class="site-header">
-            <h1>The Case of the Family Generation Gap <span class="detective-icon" aria-hidden="true">🔍</span></h1>
-            <p class="tagline">Helping families crack the code between Millennial, Gen Z, and Boomer communication styles</p>
-        </header>
-
-        <!-- Translator Section -->
-        <section class="translator-section" aria-label="Language Translator">
-            <div class="translator-controls">
-                <div class="generation-selector" role="group">
-                    <label for="from-generation">Decode From:</label>
-                    <select id="from-generation" name="from-generation">
-                        <option value="millennial">Millennial</option>
-                        <option value="genz">Gen Z</option>
-                        <option value="boomer">Boomer</option>
-                    </select>
-                </div>
-
-                <button 
-                    type="button" 
-                    class="swap-button" 
-                    aria-label="Swap generations"
-                    title="Swap generations">⇄</button>
-
-                <div class="generation-selector" role="group">
-                    <div class="generation-selector" role="group"><label for="to-generation">Translate To:</label>
-                    <select id="to-generation" name="to-generation">
-                        <option value="millennial">Millennial</option>
-                        <option value="genz" selected>Gen Z</option>
-                        <option value="boomer">Boomer</option>
-                    </select></div>
-                </fieldset>
-            </div>
-
-            <section class="translation-cards">
-                <!-- Input Card -->
-                <article class="card input-card">
-                    <header class="card-header">
-                        <h2>Evidence Input</h2>
-                        <span class="generation-badge" id="input-badge">Millennial</span>
-                    </header>
-                    <section class="card-body">
-                        <textarea 
-                            id="input-text"
-                            class="translation-input"
-                            placeholder="Enter your message to decode..."
-                            rows="6"
-                            aria-label="Input text to translate"></textarea>
-                        <nav class="card-actions" aria-label="Input actions">
-                            <button type="button" class="btn-secondary emoji-btn" data-target="input"><span>Add Emoji</span></button>
-                            <button type="button" class="btn-secondary clear-btn" data-target="input"><span>Clear</span></button>
-                        </nav>
-                    </section>
-                    <footer class="card-footer">
-                        <span class="char-count"><span id="input-count">0</span> characters</span>
-                    </footer>
-                </article>
-
-                <!-- Translate Button -->
-                <p class="translate-button-container">
-                    <button type="button" class="translate-btn" id="translate-btn">
-                        <span class="btn-icon-arrow" aria-hidden="true">→</span>
-                    </button>
-                </p>
-
-                <!-- Output Card -->
-                <article class="card output-card">
-                    <header class="card-header">
-                        <h2>Decoded Message</h2>
-                        <span class="generation-badge" id="output-badge">Gen Z</span>
-                    </header>
-                    <section class="card-body">
-                        <output 
-                            id="output-text"
-                            class="translation-output"
-                            role="region"
-                            aria-live="polite"
-                            aria-label="Translated output">
-                            <p class="empty-state">Your decoded message will appear here...</p>
-                        </output>
-                        <nav class="card-actions" aria-label="Output actions">
-                            <button type="button" class="btn-primary copy-btn" disabled><span>Copy</span></button>
-                        </nav>
-                    </section>
-                    <footer class="card-footer">
-                        <span class="char-count"><span id="output-count">0</span> characters</span>
-                    </footer>
-                </article>
-            </section>
-
-            <!-- Quick Examples -->
-            <details class="quick-examples">
-                <summary>Quick Case Files (Click to expand)</summary>
-                <ul class="examples-grid" role="list">
-                    <li><button type="button" class="example-btn" data-text="I'm literally dying! This is so extra! 😂💀" data-from="millennial">"I'm literally dying! This is so extra! 😂💀"</button></li>
-                    <li><button type="button" class="example-btn" data-text="no cap this slaps fr fr 💯🔥" data-from="genz">"no cap this slaps fr fr 💯🔥"</button></li>
-                    <li><button type="button" class="example-btn" data-text="That's the bee's knees! Groovy! ☎️📻" data-from="boomer">"That's the bee's knees! Groovy! ☎️📻"</button></li>
-                    <li><button type="button" class="example-btn" data-text="Can we circle back on this? Synergy! 💼" data-from="millennial">"Can we circle back on this? Synergy! 💼"</button></li>
-                </ul>
-            </details>
-        </section>
-
-        <!-- Examples Toggle -->
-        <p class="examples-toggle">
-            <button type="button" id="toggle-examples" class="btn-secondary">Show Case Examples</button>
+      <!-- Site header including the title and tagline -->
+      <header class="site-header">
+        <h1>The Case of Emojis</h1>
+        <p class="tagline">
+          Cracking the code between text and emojis for clear communication
         </p>
+      </header>
 
-        <!-- Examples Section -->
-        <section class="examples-section hidden" id="examples-section" aria-label="Translation Examples">
-            <h2>Case File Archives</h2>
+      <section class="translator-section" aria-label="Emoji Transformer">
+        <section class="translator-controls">
+          <section class="transform-selector">
+            <label for="transform-mode">Transform Mode:</label>
+            <select id="transform-mode" name="transform-mode">
+              <option value="text-to-emoji">Text → Emoji</option>
+              <option value="emoji-to-text">Emoji → Text</option>
+            </select>
+          </section>
 
-            <article class="example-category">
-                <h3>🔍 From Millennial to Gen Z</h3>
-                <section class="example-pair">
-                    <section class="example-original">
-                        <strong>Original:</strong>
-                        <p>"I'm literally dying! This is so extra! 😂💀"</p>
-                    </section>
-                    <section class="example-translation">
-                        <strong>Decoded:</strong>
-                        <p>"I'm dead fr! This is too much! 💀😭"</p>
-                    </section>
-                </section>
-            </article>
-
-            <article class="example-category">
-                <h3>🔍 From Gen Z to Boomer</h3>
-                <section class="example-pair">
-                    <section class="example-original">
-                        <strong>Original:</strong>
-                        <p>"no cap this slaps fr fr 💯🔥"</p>
-                    </section>
-                    <section class="example-translation">
-                        <strong>Decoded:</strong>
-                        <p>"Honestly, this is excellent! Really great! 👍⭐"</p>
-                    </section>
-                </section>
-            </article>
-
-            <article class="example-category">
-                <h3>🔍 From Boomer to Millennial</h3>
-                <section class="example-pair">
-                    <section class="example-original">
-                        <strong>Original:</strong>
-                        <p>"That's the bee's knees! Groovy! ☎️📻"</p>
-                    </section>
-                    <section class="example-translation">
-                        <strong>Decoded:</strong>
-                        <p>"That's amazing! So cool! 📱💻"</p>
-                    </section>
-                </section>
-            </article>
+          <button
+            type="button"
+            class="swap-button"
+            aria-label="Swap transformation mode"
+            title="Swap transformation mode"
+          >
+            ⇄
+          </button>
         </section>
 
-        <!-- Footer -->
-        <footer class="site-footer">
-            <p>Case closed with The Agents from CSE 210 @ UC San Diego </p>
-            <p class="footer-sub">Investigating communication since October 2025</p>
-        </footer>
+        <!-- Input & output viewing to the user with translate button option -->
+        <section class="translation-cards">
+          <article class="card input-card">
+            <header class="card-header">
+              <h2>Evidence Input</h2>
+              <span class="transform-badge" id="input-badge">Text</span>
+            </header>
+            <section class="card-body">
+              <textarea
+                id="input-text"
+                class="translation-input"
+                placeholder="Enter your text to transform..."
+                rows="6"
+                aria-label="Input text to transform"
+              ></textarea>
+              <section class="card-actions">
+                <button
+                  type="button"
+                  class="btn-secondary emoji-btn"
+                  data-target="input"
+                >
+                  <span>Add Emoji</span>
+                </button>
+                <button
+                  type="button"
+                  class="btn-secondary clear-btn"
+                  data-target="input"
+                >
+                  <span>Clear</span>
+                </button>
+              </section>
+            </section>
+            <footer class="card-footer">
+              <span class="char-count"
+                ><span id="input-count">0</span> characters</span
+              >
+            </footer>
+          </article>
+
+          <section class="translate-button-container">
+            <button type="button" class="translate-btn" id="translate-btn">
+              <span class="btn-icon-arrow" aria-hidden="true">→</span>
+            </button>
+          </section>
+
+          <article class="card output-card">
+            <header class="card-header">
+              <h2>Decoded Message</h2>
+              <span class="transform-badge" id="output-badge">Emoji</span>
+            </header>
+            <section class="card-body">
+              <section
+                id="output-text"
+                class="translation-output"
+                role="region"
+                aria-live="polite"
+                aria-label="Translated output"
+              >
+                <p class="empty-state">
+                  Your transformed message will appear here...
+                </p>
+              </section>
+              <section class="card-actions">
+                <button type="button" class="btn-primary copy-btn" disabled>
+                  <span>Copy</span>
+                </button>
+              </section>
+            </section>
+            <footer class="card-footer">
+              <span class="char-count"
+                ><span id="output-count">0</span> characters</span
+              >
+            </footer>
+          </article>
+        </section>
+
+        <!-- View the quick examples option -->
+        <details class="quick-examples">
+          <summary>Quick Case Files (Click to expand)</summary>
+          <section class="examples-grid">
+            <button
+              type="button"
+              class="example-btn"
+              data-text="I love pizza and coffee"
+              data-mode="text-to-emoji"
+            >
+              "I love pizza and coffee"
+            </button>
+            <button
+              type="button"
+              class="example-btn"
+              data-text="🎉🎂🎈"
+              data-mode="emoji-to-text"
+            >
+              "🎉🎂🎈"
+            </button>
+            <button
+              type="button"
+              class="example-btn"
+              data-text="Good morning sunshine"
+              data-mode="text-to-emoji"
+            >
+              "Good morning sunshine"
+            </button>
+            <button
+              type="button"
+              class="example-btn"
+              data-text="🌧️☔🌈"
+              data-mode="emoji-to-text"
+            >
+              "🌧️☔🌈"
+            </button>
+          </section>
+        </details>
+      </section>
+
+      <!-- View all of the full examples -->
+      <section class="examples-toggle">
+        <button type="button" id="toggle-examples" class="btn-secondary">
+          Show Case Examples
+        </button>
+      </section>
+
+      <!-- Full examples for users to view and use in the emoji converter -->
+      <section
+        class="examples-section hidden"
+        id="examples-section"
+        aria-label="Transformation Examples"
+      >
+        <h2>Case File Archives</h2>
+
+        <article class="example-category">
+          <h3>🔍 Text to Emoji</h3>
+          <section class="example-pair">
+            <section class="example-original">
+              <strong>Original:</strong>
+              <p>"I love pizza and coffee"</p>
+            </section>
+            <section class="example-translation">
+              <strong>Decoded:</strong>
+              <p>"I ❤️ 🍕 and ☕"</p>
+            </section>
+          </section>
+        </article>
+
+        <article class="example-category">
+          <h3>🔍 Emoji to Text</h3>
+          <section class="example-pair">
+            <section class="example-original">
+              <strong>Original:</strong>
+              <p>"🎉🎂🎈"</p>
+            </section>
+            <section class="example-translation">
+              <strong>Decoded:</strong>
+              <p>"party cake balloons"</p>
+            </section>
+          </section>
+        </article>
+
+        <article class="example-category">
+          <h3>🔍 Weather Emojis</h3>
+          <section class="example-pair">
+            <section class="example-original">
+              <strong>Original:</strong>
+              <p>"🌧️☔🌈"</p>
+            </section>
+            <section class="example-translation">
+              <strong>Decoded:</strong>
+              <p>"rain umbrella rainbow"</p>
+            </section>
+          </section>
+        </article>
+      </section>
+
+      <!-- Footer with class and team credits -->
+      <footer class="site-footer">
+        <p>Case closed with The Agents from CSE 210 @ UC San Diego</p>
+        <p class="footer-sub">Investigating communication since October 2025</p>
+      </footer>
     </main>
 
-    <!-- Emoji Picker Modal -->
-    <aside id="emoji-picker" class="emoji-picker hidden" role="dialog" aria-modal="true" aria-label="Emoji Picker">
-        <div class="emoji-picker-backdrop"></div>
-        <section class="emoji-picker-content">
-            <header class="emoji-picker-header">
-                <h3>Select Emoji</h3>
-                <button type="button" class="close-btn" aria-label="Close emoji picker">✕</button>
-            </header>
-            <section class="emoji-picker-body">
-                <nav class="emoji-categories" aria-label="Emoji categories">
-                    <button type="button" class="category-btn active" data-category="smileys">😀</button>
-                    <button type="button" class="category-btn" data-category="gestures">👋</button>
-                    <button type="button" class="category-btn" data-category="objects">💼</button>
-                    <button type="button" class="category-btn" data-category="symbols">💯</button>
-                </nav>
-                <section class="emoji-grid" id="emoji-grid" aria-label="Emoji list"></section>
-            </section>
+    <!-- Emoji picker for users to select (hidden) -->
+    <aside
+      id="emoji-picker"
+      class="emoji-picker hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Emoji Picker"
+    >
+      <section class="emoji-picker-backdrop"></section>
+      <section class="emoji-picker-content">
+        <header class="emoji-picker-header">
+          <h3>Select Emoji</h3>
+          <button
+            type="button"
+            class="close-btn"
+            aria-label="Close emoji picker"
+          >
+            ✕
+          </button>
+        </header>
+        <section class="emoji-picker-body">
+          <section class="emoji-categories">
+            <button
+              type="button"
+              class="category-btn active"
+              data-category="smileys"
+            >
+              😀
+            </button>
+            <button type="button" class="category-btn" data-category="gestures">
+              👋
+            </button>
+            <button type="button" class="category-btn" data-category="objects">
+              💼
+            </button>
+            <button type="button" class="category-btn" data-category="symbols">
+              💯
+            </button>
+          </section>
+          <section class="emoji-grid" id="emoji-grid"></section>
         </section>
+      </section>
     </aside>
 
-    <!-- Toast Notification -->
-    <output id="toast" class="toast hidden" role="status" aria-live="polite"></output>
+    <!-- Notification for user feedback -->
+    <section
+      id="toast"
+      class="toast hidden"
+      role="status"
+      aria-live="polite"
+    ></section>
 
     <script src="app.js"></script>
-</body>
+  </body>
 </html>

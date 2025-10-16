@@ -7,7 +7,8 @@ export default [
     },
     rules: {
       semi: ["error", "always"],
-      quotes: ["error", "double"],
+      // Temporarily disable quotes rule to avoid conflict with Prettier
+      // quotes: ["error", "double"],
     },
   },
 ];
