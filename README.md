@@ -1,6 +1,6 @@
 # Text-Emoji Converter Application
 
-This repository hosts the **Text-to-Emoji Conversion Project**. Our team, **The Agents**, chose a **detective** theme. The app creates a fun way for parents and Gen Z children to communicate with each other using text-to-emoji conversions.
+This repository hosts the **Text-to-Emoji Conversion Project**. Our team, **The Agents**, chose a **detective** theme. The app creates a fun way for all people to communicate with each other using text-to-emoji conversions.
 
 ---
 
@@ -9,14 +9,44 @@ This repository hosts the **Text-to-Emoji Conversion Project**. Our team, **The 
 - **Leads:** Helena Bender and Rahat Bhatia
 - **Back-End Team:** Akshit Agarwal, Rahat Bhatia, Bimal Gyawali, Zhe Kan, Astoria Ma, Haiyi Xing
 - **Front-End Team:** Helena Bender, Bhavik Chandna, Liam Hardy, Cynthia Vuong, Grace Yang
+- **New Team:** Cheng and Chuanqi
 
 ---
 
 ## Setup & Installation
 
-1. Install Ollama:
+### Prerequisites
 
-- [Insert here]
+- Node.js (version 14 or higher)
+- npm
+
+### Installation
+
+1. Clone the repository:
+
+- `cd text-emoji-converter`
+
+2. Install dependencies:
+
+- `npm install`
+
+3. Start the application:
+
+- `npm start`
+
+---
+
+## Running
+
+### Local Development
+
+- `npm start`
+- `http://localhost:3000`
+
+### Vercel Deployment
+
+- The app is automatically deployed to Vercel when changes are pushed to the main branch.
+- **Live URL:** [https://text-emoji-converter-eight.vercel.app/]
 
 ---
 
@@ -48,7 +78,8 @@ Note: Some issues may require manual fixes. Using VSCode extensions for ESLint a
 ## Pull Requests
 
 1. All work should be done on feature branches.
-2. PR titles should be descriptive and follow the commit conventions:
+2. Create PRs from feature branches to main branch once completed.
+3. PR titles should be descriptive and follow the commit conventions:
    - [PR title guidelines](https://flank.github.io/flank/pr_titles/)
 
 ---

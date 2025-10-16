@@ -13,7 +13,9 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Initialize Groq client
+/*
+ * Initialize the Groq client
+ */
 const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
 });
@@ -22,7 +24,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "source/front-end")));
 
-// Transform endpoint
+/*
+ * Transform endpoint
+ */
+
 app.post("/api/transform", async (req, res) => {
   try {
     const { text, mode } = req.body;
@@ -34,14 +39,14 @@ app.post("/api/transform", async (req, res) => {
     let systemPrompt;
     if (mode === "text-to-emoji") {
       systemPrompt = `Convert the following text to emojis. Replace words with appropriate emojis where possible. Keep the structure readable. Examples:
-- "I love pizza" → "I ❤️ 🍕"
-- "Good morning sunshine" → "Good 🌅 ☀️"
-- "Happy birthday" → "😊 🎂"`;
+      - "I love pizza" → "I ❤️ 🍕"
+      - "Good morning sunshine" → "Good 🌅 ☀️"
+      - "Happy birthday" → "😊 🎂"`;
     } else {
       systemPrompt = `Convert emojis to descriptive text. Replace emojis with their meaning in simple words. Examples:
-- "I ❤️ 🍕" → "I love pizza"
-- "😊 🎂" → "happy birthday"
-- "🌧️☔" → "rain umbrella"`;
+      - "I ❤️ 🍕" → "I love pizza"
+      - "😊 🎂" → "happy birthday"
+      - "🌧️☔" → "rain umbrella" `;
     }
 
     const completion = await groq.chat.completions.create({
@@ -62,15 +67,21 @@ app.post("/api/transform", async (req, res) => {
   }
 });
 
-// Serve the main page
+/*
+ * Serve the main HTML page
+ */
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "source/front-end/index.html"));
 });
 
-// For Vercel, export the app
+/*
+ * From Vercel, export the application
+ */
 export default app;
 
-// For local development
+/*
+ * Rather than using Vercel, please use this for local dev
+ */
 if (process.env.NODE_ENV !== "production") {
   app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);

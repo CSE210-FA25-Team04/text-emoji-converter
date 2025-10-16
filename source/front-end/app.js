@@ -448,9 +448,7 @@ const state = {
 const elements =
   typeof document !== "undefined"
     ? {
-        // Generation selectors
-        fromGenSelect: document.getElementById("from-generation"),
-        toGenSelect: document.getElementById("to-generation"),
+        // Transform mode selector
         transformModeSelect: document.getElementById("transform-mode"),
         swapButton: document.querySelector(".swap-button"),
 
@@ -490,135 +488,6 @@ const elements =
     : {};
 
 // -------------------------------------------
-// Core Translation Feature
-// -------------------------------------------
-/**
- * Minimal local translations fallback used when an API key is not present.
- * Keeps the mapping small and deterministic for unit tests.
- */
-const translations = {
-  millennial: {
-    genz: {
-      patterns: [
-        { from: /amazing/gi, to: "bussin" },
-        { from: /😂/g, to: "💀" },
-      ],
-      suffix: " fr fr",
-    },
-  },
-};
-
-// Comment - Must be replaced by backend team!
-/**
- * Translates text from one generation's communication style to another
- *
- *
- * Translates text between generational language styles (Millennial, Gen Z, Boomer).
- *
- * This function supports both **server** (Groq API) and **browser/local** (fallback) modes.
- *
- * @param {string} text - The input text to translate.
- * @param {'millennial'|'genz'|'boomer'} fromGen - Source generation style.
- * @param {'millennial'|'genz'|'boomer'} toGen - Target generation style.
- * @returns {Promise<string>} - The translated text.
- *
- * SECURITY NOTE:
- * - The Groq API call uses `process.env.GROQ_API_KEY`, which must be set server-side only.
- * - NEVER embed API keys in front-end code or client bundles.
- * - For production: implement a secure server route (e.g., POST /api/translate)
- *   that calls Groq privately and returns translation to the browser.
- *
- * BEHAVIOR:
- * - If API key is available → uses Groq model for natural generational translation.
- * - If no API key → uses local lookup map (for offline demos or dev environments).
- */
-
-async function translateText(text, fromGen, toGen) {
-  if (!text || !text.trim() || fromGen === toGen) return text.trim();
-
-  fromGen = fromGen.toLowerCase();
-  toGen = toGen.toLowerCase();
-
-  // const genStyles = {
-  //   genz: "Gen Z slang — compact, emoji-heavy, humor-driven, internet-native tone ",
-  //   millennial: "Millennial tone — conversational, pop-culture infused, uses mild humor or memes, occasional emojis.",
-  //   boomer: "Boomer tone — formal, respectful, structured sentences, avoids slang or abbreviations."
-  // };
-
-  try {
-    if (
-      typeof process !== "undefined" &&
-      process.env &&
-      process.env.GROQ_API_KEY
-    ) {
-      const Groq = require("groq-sdk");
-      const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
-
-      const SYSTEM_PROMPT = (fromGen, toGen) => `
-You are a generational translator that rewrites text from the ${fromGen.toUpperCase()} communication style 
-into the ${toGen.toUpperCase()} communication style, preserving meaning and emotion.
-
-### Style References
-- **Boomer:** Formal, polite, full sentences, avoids slang or emojis.
-- **Millennial:** Conversational, balanced, friendly, may use light humor or emojis (😊, 😂, 👍).
-- **Gen Z:** Short, emoji-heavy, internet slang (🔥💀😭😂❤️‍🔥, fr, bet, no cap, lowkey, ong).
-
-### Translation Rules
-1. Translate naturally from ${fromGen} → ${toGen}.
-2. Keep the tone authentic to the target generation — not exaggerated or parody.
-3. Never explain or add meta-comments.
-4. Maintain the same meaning and emotional tone.
-
-### Examples
-Boomer → Gen Z:
-- “Hello, how are you doing today?” → “yo wyd 💀😂”
-- “Congratulations on your new job!” → “let’s gooo congrats 🔥👏”
-
-Gen Z → Boomer:
-- “ngl that was mid fr 💀” → “Honestly, that was quite average.”
-
-Millennial → Gen Z:
-- “Let’s hang out after class.” → “link up fr 🔥💀”
-
-Gen Z → Millennial:
-- “bro that was lit 🔥😭” → “That was actually awesome 😂”
-`;
-
-      const completion = await groq.chat.completions.create({
-        model: "llama-3.1-8b-instant",
-        messages: [
-          { role: "system", content: SYSTEM_PROMPT(fromGen, toGen) }, // ✅ fix
-          { role: "user", content: text },
-        ],
-        temperature: 0.8,
-        max_tokens: 150,
-      });
-
-      const reply = completion?.choices?.[0]?.message?.content?.trim();
-      console.log("LLM Reply:", reply);
-      if (reply) return reply;
-    }
-  } catch (err) {
-    console.error("Groq translation failed, falling back:", err.message || err);
-  }
-
-  const translationMap = translations[fromGen]?.[toGen];
-  if (!translationMap) return text;
-
-  let result = text;
-  if (translationMap.patterns) {
-    translationMap.patterns.forEach((pattern) => {
-      result = result.replace(pattern.from, pattern.to);
-    });
-  }
-  if (translationMap.suffix && !result.trim().endsWith(translationMap.suffix)) {
-    result = `${result.trim()}${translationMap.suffix}`;
-  }
-
-  return result.trim();
-}
-
-// -------------------------------------------
 // Utility Functions
 // -------------------------------------------
 /**
@@ -634,7 +503,7 @@ function getTransformModeLabel(value) {
 // Export functions for unit testing and external usage.
 // When this file is included in a browser via <script>, these exports
 // are harmless because they only exist in module contexts.
-export { translateText, getTransformModeLabel };
+export { getTransformModeLabel };
 
 /**
  * Updates the transform mode badge labels in the UI
